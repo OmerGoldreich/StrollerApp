@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Stroller</string>
+    <string name="facebook_app_id">385796825186612</string>
+    <string name="fb_login_protocol_scheme">fb385796825186612</string>
 </resources>

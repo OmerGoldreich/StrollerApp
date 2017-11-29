@@ -4,10 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/aseel1"
+    android:visibility="visible"
     tools:context="com.stroller.stroller.MainActivity">
 
+
     <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/googleBtn"></com.google.android.gms.common.SignInButton>
+        android:layout_height="54dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></com.google.android.gms.common.SignInButton>
+
+    <com.facebook.login.widget.LoginButton
+        xmlns:facebook="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/facebookBtn"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="16dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:textSize="14dp"
+        facebook:com_facebook_login_text="Continue with Facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/googleBtn"></com.facebook.login.widget.LoginButton>
 </android.support.constraint.ConstraintLayout>
