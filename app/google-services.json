@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "299325249408",
+    "firebase_url": "https://stroller-omat.firebaseio.com",
+    "project_id": "stroller-omat",
+    "storage_bucket": "stroller-omat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299325249408:android:53bf01fc2acd8d1a",
+        "android_client_info": {
+          "package_name": "com.stroller.stroller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299325249408-60rsr86apa5rv8ius4n5ul688v8tg61c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.stroller.stroller",
+            "certificate_hash": "ceaeab5ba52db357e081f319127d60bd3ea52129"
+          }
+        },
+        {
+          "client_id": "299325249408-ip3d8ikt9iuttaco17uraagah0vt2j6t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299325249408-ip3d8ikt9iuttaco17uraagah0vt2j6t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
