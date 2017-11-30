@@ -14,6 +14,10 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,6 +37,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity {
     private SignInButton mGoogleBtn;
+    private LoginButton mFacebookBtn;
     private static final int RC_GOOGLE_SIGN_IN=1293;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mCallbackManager = CallbackManager.Factory.create();
-        LoginButton mFacebookBtn = findViewById(R.id.facebookBtn);
+        mFacebookBtn = findViewById(R.id.facebookBtn);
         mFacebookBtn.setReadPermissions("email", "public_profile");
         mFacebookBtn.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -84,13 +89,45 @@ public class MainActivity extends AppCompatActivity {
         });
         RC_FB_SIGN_IN=mFacebookBtn.getRequestCode();
 
+
     }
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            int disconnect= extras.getInt("disconnect");
+            if(disconnect==1){
+                logOut();
+                return;
+            }
+        }
         updateUI(currentUser);
+    }
+    private void logOut(){
+        mAuth.signOut();
+        mGoogleSignInClient.signOut();
+        /*LoginManager fbLoginManager=LoginManager.getInstance();
+        if (fbLoginManager!=null){
+
+            fbLoginManager.logOut();
+        }*/
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return; // already logged out
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
     }
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

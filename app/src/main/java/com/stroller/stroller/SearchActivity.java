@@ -1,6 +1,7 @@
 package com.stroller.stroller;
 
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,6 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,16 @@ public class SearchActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
+    }
+    public void strollButtonAction(View v) {
+        Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void logOutButtonAction(View v) {
+        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+        intent.putExtra("disconnect",1);
+        startActivity(intent);
     }
 
 
@@ -63,5 +78,6 @@ public class SearchActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
     }
 }
