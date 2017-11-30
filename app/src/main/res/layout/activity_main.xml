@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aseel1"
+    android:background="@drawable/pg"
     android:visibility="visible"
     tools:context="com.stroller.stroller.MainActivity">
 
@@ -15,7 +15,7 @@
         android:layout_height="54dp"
         android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></com.google.android.gms.common.SignInButton>
