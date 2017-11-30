@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/transparent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/editText4"
+        android:layout_alignStart="@+id/editText4"
+        android:layout_below="@+id/editText4"
+        android:layout_marginTop="4dp"
+        android:alpha="0.6"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:hint="@string/editText3"
+        android:textColorHint="#585252"
+        android:textStyle="italic"
+        android:textColor="#585252"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:alpha="0.6"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:hint="@string/editText4"
+        android:textColorHint="#585252"
+        android:textStyle="italic"
+        android:textColor="#585252"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="242dp" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="320dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/editText3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/btn2"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="379dp" />
+
+
+</RelativeLayout>

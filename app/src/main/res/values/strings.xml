@@ -2,4 +2,10 @@
     <string name="app_name">Stroller</string>
     <string name="facebook_app_id">385796825186612</string>
     <string name="fb_login_protocol_scheme">fb385796825186612</string>
+    <string name="btn2">"S T R O L L"</string>
+    <string name="editText4">"Where are you now?"</string>
+    <string name="editText3">"Where do you want to go?"</string>
+    <string name="frg2">"You currently have no favorite routes."</string>
+    <string name="btn1">"Logout"</string>
+    <string name="txt">"Welcome, Regina"</string>
 </resources>

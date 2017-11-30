@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     private static final String TAG="MAIN_ACTIVITY";
     private static final String googleButtonText="Continue with Google";
-    private static final String facebookButtonText="Continue with Facebook";
     private static int RC_FB_SIGN_IN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void updateUI(FirebaseUser user){
-
+        if(user!=null){
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }
     }
 }
