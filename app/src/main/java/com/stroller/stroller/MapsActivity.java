@@ -27,6 +27,8 @@ import com.stroller.stroller.navigationPackage.DirectionFinder;
 import com.stroller.stroller.navigationPackage.DirectionFinderListener;
 import com.stroller.stroller.navigationPackage.Route;
 
+import com.google.android.gms.maps.model.MapStyleOptions;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
 
     private GoogleMap mMap;
@@ -59,6 +61,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                        this, R.raw.style_json));
         LatLng arc = new LatLng(48.873862, 2.295264);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arc, 5));
 
