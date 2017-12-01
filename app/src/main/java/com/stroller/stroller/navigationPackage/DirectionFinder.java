@@ -19,12 +19,10 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Mai Thanh Hiep on 4/3/2016.
- */
+
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
-    private static final String GOOGLE_API_KEY = "AIzaSyDZmApUiJw6a7S9DC6QpXcNGysKLEWyP0U"; //this is stroller's
+    private static final String GOOGLE_API_KEY = "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"; //this is stroller's
     private DirectionFinderListener listener;
     private String origin;
     private String destination;
@@ -44,7 +42,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
 
-        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + "&key=" + GOOGLE_API_KEY;
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=Arc+de+Triomphe,+Place+Charles+de+Gaulle,+75008+Paris,+France&destination=Eiffel+Tower,+Champ+de+Mars,+5+Avenue+Anatole+France,+75007+Paris,+France&waypoints=22+Av.+des+Champs-%C3%89lys%C3%A9es,+75008+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {

@@ -219,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void updateUI(FirebaseUser user){
-        if(user!=null){
+        //if(user!=null){
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
-        }
+        //}
     }
 }

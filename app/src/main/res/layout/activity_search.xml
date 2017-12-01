@@ -8,6 +8,7 @@
     android:background="@drawable/blurprg2"
     android:gravity="center"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
     tools:context="com.stroller.stroller.SearchActivity">
 
     <Button
