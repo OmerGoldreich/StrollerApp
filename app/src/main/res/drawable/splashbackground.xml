@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@color/colorSplash"></item>
     <item>
-        <bitmap android:src="@drawable/try1001"
+        <bitmap android:src="@drawable/try9898"
             android:gravity="center"/>
     </item>
 </layer-list>
