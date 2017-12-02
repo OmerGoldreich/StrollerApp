@@ -219,10 +219,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    public void fakeGoogleButtonClick(View v){
+        signIn();
+    }
+    public void fakeFacebookButtonClick(View v){
+        mFacebookBtn.callOnClick();
+    }
     private void updateUI(FirebaseUser user){
         if(user!=null){
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 }

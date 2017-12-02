@@ -9,6 +9,9 @@
     <string name="btn1">"Logout"</string>
     <string name="txt">"Welcome, Regina"</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_get_polyline">getPolyline</string>
+    <string name="title_activity_find_path">Map</string>
+    <string name="title_activity_start">StartActivity</string>
 
 
 </resources>

@@ -42,6 +42,7 @@ public class SearchActivity extends AppCompatActivity {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
         intent.putExtra("disconnect",1);
         startActivity(intent);
+        finish();
     }
 
 
