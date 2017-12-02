@@ -12,7 +12,8 @@
         android:layout_marginTop="93dp"
         android:text="@string/frg2"
         android:textColor="#fff"
-        android:textSize="15dp" />
+        android:textSize="15dp"
+        android:id="@+id/textView" />
 
 
 </RelativeLayout>

@@ -1,6 +1,5 @@
 package com.stroller.stroller;
 
-
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
