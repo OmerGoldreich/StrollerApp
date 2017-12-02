@@ -14,7 +14,7 @@ public class FragmentOne extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         super.onCreate(savedInstanceState);
     }
 

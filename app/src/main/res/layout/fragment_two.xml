@@ -4,16 +4,10 @@
     android:background="@android:color/transparent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="93dp"
-        android:text="@string/frg2"
-        android:textColor="#fff"
-        android:textSize="15dp"
-        android:id="@+id/textView" />
+    <ListView
+        android:id="@+id/favesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </RelativeLayout>

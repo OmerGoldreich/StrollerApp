@@ -1,6 +1,7 @@
 package com.stroller.stroller.navigationPackage;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -15,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +39,6 @@ public class DirectionFinder {
     }
 
     private String createUrl() throws UnsupportedEncodingException {
-        String urlOrigin = URLEncoder.encode(origin, "utf-8");
-        String urlDestination = URLEncoder.encode(destination, "utf-8");
-
         return "https://maps.googleapis.com/maps/api/directions/json?optimize=true&mode=walking&origin=Ob-La-Di,+54+Rue+de+Saintonge,+75003+Paris,+France&destination=Shakespeare+%26+Company,+Rue+de+la+B%C3%BBcherie,+Paris,+France&waypoints=Rue+Debelleyme,+75003+Paris,+France|Rue+des+Ecouffes,+75004+Paris,+France|Square+Ren%C3%A9+Viviani,+Quai+de+Montebello,+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
     }
 
@@ -88,6 +85,7 @@ public class DirectionFinder {
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
+
         for (int i = 0; i < jsonRoutes.length(); i++) {
             JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
             Route route = new Route();

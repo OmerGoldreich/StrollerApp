@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class MainActivity extends AppCompatActivity {
     private SignInButton mGoogleBtn;
     private LoginButton mFacebookBtn;
-    private Button tmpBttn;
     private static final int RC_GOOGLE_SIGN_IN=1293;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
-        mGoogleBtn=(SignInButton)findViewById(R.id.googleBtn);
+        mGoogleBtn=findViewById(R.id.googleBtn);
         setGoogleButtonText(mGoogleBtn,googleButtonText);
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
