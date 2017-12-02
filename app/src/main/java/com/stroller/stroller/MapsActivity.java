@@ -13,14 +13,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.stroller.stroller.navigationPackage.DirectionFinder;
@@ -29,7 +33,14 @@ import com.stroller.stroller.navigationPackage.Route;
 
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
+    private static final PatternItem DOT = new Dot();
+    private static final int PATTERN_GAP_LENGTH_PX = 10;
+    private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+    //
+// Create a stroke pattern of a gap followed by a dot.
+    private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
     private GoogleMap mMap;
     private List<Marker> originMarkers = new ArrayList<>();
@@ -49,8 +60,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void sendRequest() {
-        String origin = "Arc de Triomphe";
-        String destination = "Tour Eiffel";
+        String origin = "Ob-La-Di";
+        String destination = "Shakespeare & co";
         try {
             new DirectionFinder(this, origin, destination).execute();
         } catch (UnsupportedEncodingException e) {
@@ -64,8 +75,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /*googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.style_json));*/
-        LatLng arc = new LatLng(48.873862, 2.295264);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arc, 5));
+        LatLng originLoc = new LatLng(48.8617551, 2.3621251);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 5));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -119,7 +130,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-
+            originMarkers.add(mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
+                    .title(route.endAddress)
+                    .position(route.endLocation)));
             PolylineOptions polylineOptions = new PolylineOptions().
                     geodesic(true).
                     color(Color.parseColor("#FF8765")).
@@ -127,8 +141,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             for (int i = 0; i < route.points.size(); i++)
                 polylineOptions.add(route.points.get(i));
-
-            polylinePaths.add(mMap.addPolyline(polylineOptions));
+            Polyline currentLine=mMap.addPolyline(polylineOptions);
+            currentLine.setPattern(PATTERN_POLYLINE_DOTTED);
+            polylinePaths.add(currentLine);
         }
     }
 }

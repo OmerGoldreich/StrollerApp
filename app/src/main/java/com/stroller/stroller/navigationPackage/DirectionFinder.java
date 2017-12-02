@@ -42,7 +42,7 @@ public class DirectionFinder {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
         String urlDestination = URLEncoder.encode(destination, "utf-8");
 
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=Arc+de+Triomphe,+Place+Charles+de+Gaulle,+75008+Paris,+France&destination=Eiffel+Tower,+Champ+de+Mars,+5+Avenue+Anatole+France,+75007+Paris,+France&waypoints=22+Av.+des+Champs-%C3%89lys%C3%A9es,+75008+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
+        return "https://maps.googleapis.com/maps/api/directions/json?optimize=true&mode=walking&origin=Ob-La-Di,+54+Rue+de+Saintonge,+75003+Paris,+France&destination=Shakespeare+%26+Company,+Rue+de+la+B%C3%BBcherie,+Paris,+France&waypoints=Rue+Debelleyme,+75003+Paris,+France|Rue+des+Ecouffes,+75004+Paris,+France|Square+Ren%C3%A9+Viviani,+Quai+de+Montebello,+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
@@ -94,16 +94,17 @@ public class DirectionFinder {
 
             JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
             JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
-            JSONObject jsonLeg = jsonLegs.getJSONObject(0);
-            JSONObject jsonDistance = jsonLeg.getJSONObject("distance");
-            JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
-            JSONObject jsonEndLocation = jsonLeg.getJSONObject("end_location");
-            JSONObject jsonStartLocation = jsonLeg.getJSONObject("start_location");
+            JSONObject jsonStartingLeg = jsonLegs.getJSONObject(0);
+            JSONObject jsonFinalLeg = jsonLegs.getJSONObject(jsonLegs.length()-1);
+            JSONObject jsonDistance = jsonStartingLeg.getJSONObject("distance");
+            JSONObject jsonDuration = jsonStartingLeg.getJSONObject("duration");
+            JSONObject jsonEndLocation = jsonFinalLeg.getJSONObject("end_location");
+            JSONObject jsonStartLocation = jsonStartingLeg.getJSONObject("start_location");
 
             route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
             route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
-            route.endAddress = jsonLeg.getString("end_address");
-            route.startAddress = jsonLeg.getString("start_address");
+            route.endAddress = jsonFinalLeg.getString("end_address");
+            route.startAddress = jsonStartingLeg.getString("start_address");
             route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
             route.endLocation = new LatLng(jsonEndLocation.getDouble("lat"), jsonEndLocation.getDouble("lng"));
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
