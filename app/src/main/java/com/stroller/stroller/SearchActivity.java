@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,9 @@ public class SearchActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        String getUserName= FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[1];
+        TextView username = (TextView)findViewById(R.id.txt);
+        username.setText("Hello, "+getUserName);
 
 
     }
