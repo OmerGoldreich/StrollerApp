@@ -31,6 +31,7 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     compile 'com.google.firebase:firebase-auth:11.6.2'
     compile 'com.google.android.gms:play-services-auth:11.6.2'
+    compile 'com.google.android.gms:play-services-places:11.6.2'
     compile 'com.facebook.android:facebook-login:[4,5)'
     compile 'com.github.jd-alexander:library:1.1.0'
 

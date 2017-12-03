@@ -6,6 +6,26 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/editText4"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:alpha="0.6"
+        android:background="@drawable/rounded_edittext"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:hint="@string/editText4"
+        android:textColorHint="#585252"
+        android:textStyle="italic"
+        android:textColor="#585252"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="242dp"
+        android:focusable="false"/>
+
+    <EditText
         android:id="@+id/editText3"
         android:layout_width="320dp"
         android:layout_height="60dp"
@@ -23,26 +43,8 @@
         android:textStyle="italic"
         android:textColor="#585252"
         tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="311dp" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="320dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:alpha="0.6"
-        android:background="@drawable/rounded_edittext"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:paddingLeft="20dp"
-        android:hint="@string/editText4"
-        android:textColorHint="#585252"
-        android:textStyle="italic"
-        android:textColor="#585252"
-        tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="242dp" />
+        tools:layout_editor_absoluteY="311dp"
+        android:focusable="false"/>
 
     <Button
         android:id="@+id/btn2"
@@ -59,7 +61,7 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         tools:layout_editor_absoluteX="12dp"
-        tools:layout_editor_absoluteY="379dp" />
+        tools:layout_editor_absoluteY="379dp"/>
 
 
 </RelativeLayout>

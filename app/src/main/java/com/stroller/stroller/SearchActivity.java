@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +36,12 @@ public class SearchActivity extends AppCompatActivity {
         String getUserName= FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[1];
         TextView username = (TextView)findViewById(R.id.txt);
         username.setText("Hello, "+getUserName);
+    }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
     }
     public void strollButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
