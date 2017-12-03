@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff8765"
+    android:background="@color/colorrate"
+    android:layoutDirection="ltr"
     tools:context="com.stroller.stroller.UserFeedbackActivity">
 
     <TextView
@@ -43,7 +44,7 @@
     <Button
         android:id="@+id/likeButton"
         android:layout_width="157dp"
-        android:layout_height="107dp"
+        android:layout_height="157dp"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -58,7 +59,7 @@
     <Button
         android:id="@+id/dislikeButton"
         android:layout_width="157dp"
-        android:layout_height="107dp"
+        android:layout_height="157dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -66,10 +67,10 @@
         android:background="@drawable/dislikecirclebright"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintHorizontal_bias="0.83"
+        app:layout_constraintVertical_bias="0.7"/>
 
     <TextView
         android:id="@+id/textView6"
@@ -78,6 +79,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:fontFamily="casual"
+        android:gravity="left"
         android:textAlignment="center"
         android:text="@string/whyRate"
         app:layout_constraintBottom_toBottomOf="parent"
