@@ -17,6 +17,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_GOOGLE_SIGN_IN=1293;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
+    private String userFirstName;
     private CallbackManager mCallbackManager;
     private static final String TAG="MAIN_ACTIVITY";
     private static final String googleButtonText="Continue with Google";
@@ -143,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                userFirstName=account.getGivenName();
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -226,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user){
         if(user!=null){
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            intent.putExtra("firstName",this.userFirstName);
             startActivity(intent);
             finish();
         }

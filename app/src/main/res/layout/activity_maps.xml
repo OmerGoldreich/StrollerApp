@@ -209,10 +209,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="120dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="13dp"
             android:background="@null"
             android:elevation="2dp"
-            android:src="@drawable/play"
+            android:src="@drawable/playbutton3"
             map:layout_constraintEnd_toEndOf="@+id/button2"
             map:layout_constraintStart_toStartOf="@+id/button2"
             map:layout_constraintTop_toTopOf="@+id/button2" />

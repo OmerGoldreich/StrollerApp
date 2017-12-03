@@ -33,9 +33,16 @@ public class SearchActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        String getUserName= FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[1];
-        TextView username = (TextView)findViewById(R.id.txt);
-        username.setText("Hello, "+getUserName);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            String firstName= extras.getString("firstName");
+            if(firstName==null){
+                firstName=FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[0];
+            }
+            TextView username = (TextView)findViewById(R.id.txt);
+            username.setText("Hello, "+firstName);
+        }
+
     }
 
 
@@ -51,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void logOutButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        intent.putExtra("disconnect","1");
+        intent.putExtra("disconnect",1);
         startActivity(intent);
         finish();
     }
