@@ -38,7 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final PatternItem DOT = new Dot();
     private static final int PATTERN_GAP_LENGTH_PX = 10;
     private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-    //
+
 // Create a stroke pattern of a gap followed by a dot.
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
@@ -57,13 +57,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         sendRequest();
+
     }
 
     private void sendRequest() {
+        String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
         String origin = "Ob-La-Di";
         String destination = "Shakespeare & co";
         try {
-            new DirectionFinder(this, origin, destination).execute();
+            new DirectionFinder(this, origin, destination,from_faves_or_search).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

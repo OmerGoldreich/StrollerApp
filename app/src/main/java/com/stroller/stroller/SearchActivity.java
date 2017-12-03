@@ -35,12 +35,13 @@ public class SearchActivity extends AppCompatActivity {
     }
     public void strollButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
+        intent.putExtra("FAVES_OR_SEARCH","search");
         startActivity(intent);
     }
 
     public void logOutButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        intent.putExtra("disconnect",1);
+        intent.putExtra("disconnect","search");
         startActivity(intent);
         finish();
     }

@@ -36,9 +36,13 @@ public class FragmentTwo extends Fragment {
         ListView lstItems = (ListView)v.findViewById(R.id.favesList);
 
         ArrayList<String> prueba = new ArrayList<String>();
-        prueba.add("Paris, France");
-        prueba.add("Paris, France");
-        prueba.add("Alicante, Spain");
+        prueba.add("Paris1");
+        prueba.add("Paris2");
+        prueba.add("Alicante");
+        //classic list
+        // final ArrayAdapter<String> allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1,prueba);
+        //lstItems.setAdapter(allItemsAdapter);
+
 
         //customized list
         lstItems.setAdapter(new CustomAdapter(this, prueba));
@@ -46,6 +50,7 @@ public class FragmentTwo extends Fragment {
         lstItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Intent intent = new Intent(v.getContext(), MapsActivity.class);
+                intent.putExtra("FAVES_OR_SEARCH","faves");
                 startActivity(intent);
             }
         });
