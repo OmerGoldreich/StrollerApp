@@ -12,6 +12,11 @@
     <string name="title_activity_get_polyline">getPolyline</string>
     <string name="title_activity_find_path">Map</string>
     <string name="title_activity_start">StartActivity</string>
+    <string name="FAVES_OR_SEARCH">get value of 1 or 2</string>
+    <string name="youMadeIT">You're here!</string>
+    <string name="tell_us_how_you_feel">How was your experience?</string>
+    <string name="whyRate">Rating your route will help us improve the experience of other users</string>
+
 
 
 </resources>
