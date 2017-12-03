@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF8763</color>
     <color name="colorSplash">#ffe9e3</color>
+    <color name="colorSplashtrans">#B3ffe9e3</color>
+    <color name="colorSplashblue">#ced8e8</color>
 </resources>

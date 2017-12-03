@@ -7,6 +7,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,7 +41,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final PatternItem DOT = new Dot();
     private static final int PATTERN_GAP_LENGTH_PX = 10;
     private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-
 // Create a stroke pattern of a gap followed by a dot.
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
@@ -47,11 +49,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
-
+    String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
+    Integer[] imgIds={R.drawable.attractive,R.drawable.menu,R.drawable.tree,R.drawable.shoppingbag};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        fixImagesTexts();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -59,7 +63,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sendRequest();
 
     }
+    private void fixImagesTexts(){
+        ImageView[] imageViews={findViewById(R.id.imageView1),findViewById(R.id.imageView2),findViewById(R.id.imageView3),findViewById(R.id.imageView4)};
+        TextView[] textViews={findViewById(R.id.textView1),findViewById(R.id.textView2),findViewById(R.id.textView3),findViewById(R.id.textView4)};
+        for(int i=0;i<4;i++){
+            imageViews[i].setImageResource(imgIds[i]);
+            textViews[i].setText(descriptions[i]);
+        }
 
+    }
     private void sendRequest() {
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
         String origin = "Ob-La-Di";
@@ -77,8 +89,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /*googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
                         this, R.raw.style_json));*/
-        LatLng originLoc = new LatLng(48.8617551, 2.3621251);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 5));
+        //48.8550287,2.353679,16.3z
+        LatLng originLoc = new LatLng(48.8550287, 2.353679);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -126,7 +139,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(route.startLocation, 16));
+            double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
+            double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
+            LatLng originLoc = new LatLng(newLat,newLon);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
