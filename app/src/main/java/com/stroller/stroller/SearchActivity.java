@@ -51,7 +51,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void logOutButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-        intent.putExtra("disconnect","search");
+        intent.putExtra("disconnect","1");
         startActivity(intent);
         finish();
     }
