@@ -1,12 +1,16 @@
 package com.stroller.stroller;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,6 +65,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         sendRequest();
+
+        //added by Tala 19.12.17
+        final ImageButton AddtoFavesButton = (ImageButton) findViewById(R.id.imageButton);
+        AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ViewDialog alert = new ViewDialog();
+                alert.showDialog((Activity) v.getContext(), "Give this road a name");
+            }
+        });
 
     }
     private void fixImagesTexts(){

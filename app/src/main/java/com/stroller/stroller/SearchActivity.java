@@ -16,7 +16,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
+import com.stroller.stroller.FragmentTwo;
 public class SearchActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +38,7 @@ public class SearchActivity extends AppCompatActivity {
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        Bundle extras = getIntent().getExtras();
+/*        Bundle extras = getIntent().getExtras();
         if(extras != null) {
             String firstName= extras.getString("firstName");
             if(firstName==null){
@@ -41,8 +46,7 @@ public class SearchActivity extends AppCompatActivity {
             }
             TextView username = (TextView)findViewById(R.id.txt);
             username.setText("Hello, "+firstName);
-        }
-
+        }*/
     }
 
 

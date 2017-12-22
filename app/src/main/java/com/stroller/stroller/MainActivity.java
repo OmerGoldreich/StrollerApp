@@ -35,6 +35,8 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private SignInButton mGoogleBtn;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG="MAIN_ACTIVITY";
     private static final String googleButtonText="Continue with Google";
     private static int RC_FB_SIGN_IN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         RC_FB_SIGN_IN=mFacebookBtn.getRequestCode();
+
+
+        //method to add this new user to database
+        addUserToDB();
 
 
     }
@@ -234,4 +241,14 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    private void addUserToDB() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        String uniqueId = user.getUid();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("users");
+        myRef.child(uniqueId).setValue("user"+uniqueId);
+    }
+
+
 }
