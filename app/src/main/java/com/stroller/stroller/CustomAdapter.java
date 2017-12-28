@@ -64,8 +64,6 @@ class CustomAdapter extends BaseAdapter {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.list_loc_icon);
         imageView.setImageResource(R.drawable.like);
 
-        final Spinner spinner = (Spinner)rowView.findViewById(R.id.spinner);
-
 
 
 /*

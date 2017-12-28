@@ -13,8 +13,10 @@ import android.widget.EditText;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -22,6 +24,9 @@ import static android.app.Activity.RESULT_OK;
 public class FragmentOne extends Fragment {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
+    int PLACE_PICKER_REQUEST = 1;
+    int PLACE_PICKER_REQUEST2 = 2;
+
     public FragmentOne() {
         // Required empty public constructor
     }
@@ -40,11 +45,22 @@ public class FragmentOne extends Fragment {
         EditText mEditText = (EditText) v.findViewById(R.id.editText4);
         mEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {
+                try {/*
+                    //newly added 28.12
+                    AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                           // .setTypeFilter(AutocompleteFilter.)
+                            .build();
+
                     Intent intent =
                             new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                                    .setFilter(typeFilter)
                                     .build(getActivity());
                     startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+
+*/
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+
                 } catch (GooglePlayServicesRepairableException e) {
 
                 } catch (GooglePlayServicesNotAvailableException e) {
@@ -56,10 +72,17 @@ public class FragmentOne extends Fragment {
         mEditText2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
+/*
                     Intent intent =
                             new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                                     .build(getActivity());
                     startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE2);
+*/
+
+
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST2);
+
                 } catch (GooglePlayServicesRepairableException e) {
 
                 } catch (GooglePlayServicesNotAvailableException e) {

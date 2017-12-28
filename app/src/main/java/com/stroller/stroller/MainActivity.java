@@ -249,6 +249,4 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("users");
         myRef.child(uniqueId).setValue("user"+uniqueId);
     }
-
-
 }

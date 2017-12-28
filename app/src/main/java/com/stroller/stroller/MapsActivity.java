@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.stroller.stroller.navigationPackage.DirectionFinder;
@@ -40,17 +41,20 @@ import com.stroller.stroller.navigationPackage.Route;
 
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+import org.json.JSONException;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener {
     private static final PatternItem DOT = new Dot();
     private static final int PATTERN_GAP_LENGTH_PX = 10;
     private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
-// Create a stroke pattern of a gap followed by a dot.
+    // Create a stroke pattern of a gap followed by a dot.
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
     private GoogleMap mMap;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
+    private HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     private ProgressDialog progressDialog;
     String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
@@ -93,7 +97,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             new DirectionFinder(this, origin, destination,from_faves_or_search).execute();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+        interestingPointsOnTheWay.put(new LatLng(48.857514, 2.358788),"restaurant");
+        interestingPointsOnTheWay.put(new LatLng(48.852329, 2.347787),"park");
+        interestingPointsOnTheWay.put(new LatLng(48.853054, 2.349910),"selfie");
+        interestingPointsOnTheWay.put(new LatLng(48.859611, 2.359974),"shopping");
+
     }
 
     @Override
@@ -151,6 +163,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
 
+
         for (Route route : routes) {
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
             double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
@@ -161,10 +174,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
                     .title(route.startAddress)
                     .position(route.startLocation)));
-            originMarkers.add(mMap.addMarker(new MarkerOptions()
+            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
                     .title(route.endAddress)
                     .position(route.endLocation)));
+
+
+            for(LatLng location : interestingPointsOnTheWay.keySet()){
+                String val = interestingPointsOnTheWay.get(location);
+                if(val.equals("restaurant")){
+                    mMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.menu))
+                            .position(location));
+                }
+                if(val.equals("selfie")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.attractive))
+                            .position(location));
+                }
+                if(val.equals("park")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.tree))
+                            .position(location));
+                }
+                if(val.equals("shopping")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.shoppingbag))
+                            .position(location));
+                }
+            }
+
+
             PolylineOptions polylineOptions = new PolylineOptions().
                     geodesic(true).
                     color(Color.parseColor("#FF8765")).

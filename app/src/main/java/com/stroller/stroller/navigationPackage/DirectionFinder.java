@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +33,11 @@ public class DirectionFinder {
         this.destination = destination;
         this.whatPageBroughtMeHere = faves_or_search;
     }
-
-    public void execute() throws UnsupportedEncodingException {
+    public void execute() throws UnsupportedEncodingException, JSONException {
         listener.onDirectionFinderStart();
         new DownloadRawData().execute(createUrl());
+        //List<Route> parsedRoute = parseJSon(createUrl()); //new line 23.12
+        //return parsedRoute;//new line 23.12
     }
 
     private String createUrl() throws UnsupportedEncodingException {
@@ -91,8 +91,7 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-        if (data == null)
-            return;
+        if(data==null)return;
 
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
