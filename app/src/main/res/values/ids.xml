@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="addtoFaves_text_dialog" type="id" />
+    <item name="btn_dialog" type="id">dialog_button</item>
+</resources>

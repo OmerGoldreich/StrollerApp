@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/change_name_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:gravity="center_horizontal"
+        android:textColor="#ff000000"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/change_road_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/change_name_msg"
+        android:layout_centerHorizontal="true"
+        android:inputType="text"
+        android:textColor="#ff000000"
+        android:textColorHint="#ff000000" />
+
+    <Button
+        android:id="@+id/btn_dialog_new_name"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Done"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>

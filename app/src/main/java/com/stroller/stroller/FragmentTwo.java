@@ -143,6 +143,7 @@ public class FragmentTwo extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
+
     }
 
 
