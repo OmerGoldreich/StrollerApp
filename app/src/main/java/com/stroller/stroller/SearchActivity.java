@@ -8,7 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,11 +56,13 @@ public class SearchActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
     }
-    public void strollButtonAction(View v) {
+
+    //moved to FragmentOne
+    /*public void strollButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
         intent.putExtra("FAVES_OR_SEARCH","search");
         startActivity(intent);
-    }
+    }*/
 
     public void logOutButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);

@@ -15,12 +15,13 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class DirectionFinder {
-    private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
+    private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json??optimize=true&mode=walking&";
     private static final String GOOGLE_API_KEY = "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"; //this is stroller's
     private DirectionFinderListener listener;
     private String origin;
@@ -41,17 +42,12 @@ public class DirectionFinder {
     }
 
     private String createUrl() throws UnsupportedEncodingException {
-        //String urlOrigin = URLEncoder.encode(origin, "utf-8");
-        //String urlDestination = URLEncoder.encode(destination, "utf-8");
-        String urlSearch = "https://maps.googleapis.com/maps/api/directions/json?optimize=true&mode=walking&origin=Ob-La-Di,+54+Rue+de+Saintonge,+75003+Paris,+France&destination=Shakespeare+%26+Company,+Rue+de+la+B%C3%BBcherie,+Paris,+France&waypoints=Rue+Debelleyme,+75003+Paris,+France|Rue+des+Ecouffes,+75004+Paris,+France|Square+Ren%C3%A9+Viviani,+Quai+de+Montebello,+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
-        String urlFaves = "https://maps.googleapis.com/maps/api/directions/json?origin=Arc+de+Triomphe,+Place+Charles+de+Gaulle,+75008+Paris,+France&destination=Eiffel+Tower,+Champ+de+Mars,+5+Avenue+Anatole+France,+75007+Paris,+France&waypoints=22+Av.+des+Champs-%C3%89lys%C3%A9es,+75008+Paris,+France&key=AIzaSyAIEtqhx3HfArhy2nAlaY0x-HkXZz8v6Qw";
-        if(whatPageBroughtMeHere.equals("search")){
-            return urlSearch;
-        }
-        if(whatPageBroughtMeHere.equals("faves")){
-            return urlFaves;
-        }
-        return urlFaves;
+        String urlOrigin = URLEncoder.encode(origin, "utf-8");
+        String urlDestination = URLEncoder.encode(destination, "utf-8");
+        //String waypoints = "&waypoints=Rue+Debelleyme,+75003+Paris,+France|Rue+des+Ecouffes,+75004+Paris,+France|Square+Ren%C3%A9+Viviani,+Quai+de+Montebello,+Paris,+France";
+        String waypoints = "";
+        //waypoints should be extracted from the URL Omer will provide
+        return DIRECTION_URL_API + "origin=" + urlOrigin + "&destination=" + urlDestination + waypoints + "&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {
@@ -91,7 +87,8 @@ public class DirectionFinder {
     }
 
     private void parseJSon(String data) throws JSONException {
-        if(data==null)return;
+        if(data==null)
+            return;
 
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
@@ -99,6 +96,7 @@ public class DirectionFinder {
         for (int i = 0; i < jsonRoutes.length(); i++) {
             JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
             Route route = new Route();
+            String instruct = "";
 
             JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
             JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
@@ -116,7 +114,20 @@ public class DirectionFinder {
             route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
             route.endLocation = new LatLng(jsonEndLocation.getDouble("lat"), jsonEndLocation.getDouble("lng"));
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
+            route.encodedPoints = overview_polylineJson.getString("points");
 
+            //get navigation instructions
+            for(int j = 0; j < jsonLegs.length(); j++){
+                JSONObject jsonLeg = jsonLegs.getJSONObject(j);
+                JSONArray jsonSteps = jsonLeg.getJSONArray("steps");
+                for(int k = 0; k < jsonSteps.length(); k++){
+                    JSONObject step = jsonSteps.getJSONObject(k);
+                    instruct = instruct.concat(step.getString("html_instructions"));
+                    instruct = instruct.concat("\n");
+                }
+            }
+
+            route.instructions = instruct;
             routes.add(route);
         }
 

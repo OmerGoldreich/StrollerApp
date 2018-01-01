@@ -55,7 +55,6 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/buttonshape"
         android:fontFamily="sans-serif-condensed"
-        android:onClick="strollButtonAction"
         android:text="@string/btn2"
         android:textAlignment="center"
         android:textColor="#FFFFFF"

@@ -18,6 +18,8 @@
     <string name="whyRate">Help us know you better. Rating your route will help us improve the experience of other users</string>
     <string name="title_activity_store_favorites">storeFavorites</string>
     <string name="addtoFaves_text_dialog"> Give this road a name</string>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="title_activity_navigate">Map</string>
 
 
 </resources>

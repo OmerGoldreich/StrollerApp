@@ -3,6 +3,7 @@ package com.stroller.stroller;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,6 +52,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
 
     private GoogleMap mMap;
+    private static PolylineOptions polylineOptions;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
@@ -59,6 +60,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ProgressDialog progressDialog;
     String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
     Integer[] imgIds={R.drawable.attractive,R.drawable.menu,R.drawable.tree,R.drawable.shoppingbag};
+    public String instruct = "";
+    public String points = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +74,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         sendRequest();
 
         //added by Tala 19.12.17
-        final ImageButton AddtoFavesButton = (ImageButton) findViewById(R.id.imageButton);
+        final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
         AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ViewDialog alert = new ViewDialog();
-                alert.showDialog((Activity) v.getContext(), "Give this road a name");
+                alert.showDialog((Activity) v.getContext(), "Give this route a name");
+            }
+        });
+
+        Button stroll = findViewById(R.id.button2);
+        stroll.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity.this, NavigateActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -91,8 +102,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private void sendRequest() {
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
-        String origin = "Ob-La-Di";
-        String destination = "Shakespeare & co";
+        String origin = getIntent().getStringExtra("origin");
+        String destination = getIntent().getStringExtra("dest");
         try {
             new DirectionFinder(this, origin, destination,from_faves_or_search).execute();
         } catch (UnsupportedEncodingException e) {
@@ -113,10 +124,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         /*googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.style_json));*/
-        //48.8550287,2.353679,16.3z
+                        this, R.raw.style_json));
+        48.8550287,2.353679,16.3z
         LatLng originLoc = new LatLng(48.8550287, 2.353679);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));*/
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -163,7 +174,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
 
-
         for (Route route : routes) {
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
             double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
@@ -180,32 +190,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .position(route.endLocation)));
 
 
-            for(LatLng location : interestingPointsOnTheWay.keySet()){
+            /*for(LatLng location : interestingPointsOnTheWay.keySet()){
                 String val = interestingPointsOnTheWay.get(location);
                 if(val.equals("restaurant")){
                     mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.menu))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
                             .position(location));
                 }
                 if(val.equals("selfie")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.attractive))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
                             .position(location));
                 }
                 if(val.equals("park")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.tree))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
                             .position(location));
                 }
                 if(val.equals("shopping")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.shoppingbag))
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
                             .position(location));
                 }
+            }*/
+
+            for(LatLng location : interestingPointsOnTheWay.keySet()){
+                mMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
+                .position(location));
             }
 
-
-            PolylineOptions polylineOptions = new PolylineOptions().
+            polylineOptions = new PolylineOptions().
                     geodesic(true).
                     color(Color.parseColor("#FF8765")).
                     width(15);
@@ -215,6 +230,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Polyline currentLine=mMap.addPolyline(polylineOptions);
             currentLine.setPattern(PATTERN_POLYLINE_DOTTED);
             polylinePaths.add(currentLine);
+
+            instruct = route.instructions;
+            points = route.encodedPoints;
         }
+    }
+
+    public static PolylineOptions getLineOptions(){
+        return polylineOptions;
     }
 }

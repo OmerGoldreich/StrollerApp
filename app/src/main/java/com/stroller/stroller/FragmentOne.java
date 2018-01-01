@@ -8,15 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -26,6 +27,10 @@ public class FragmentOne extends Fragment {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
     int PLACE_PICKER_REQUEST = 1;
     int PLACE_PICKER_REQUEST2 = 2;
+    String origin;
+    String dest;
+    Double lat;
+    Double lng;
 
     public FragmentOne() {
         // Required empty public constructor
@@ -42,8 +47,8 @@ public class FragmentOne extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_one, container, false);
-        EditText mEditText = (EditText) v.findViewById(R.id.editText4);
-        mEditText.setOnClickListener(new View.OnClickListener() {
+        EditText originEditText = v.findViewById(R.id.editText4);
+        originEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {/*
                     //newly added 28.12
@@ -68,8 +73,8 @@ public class FragmentOne extends Fragment {
                 }
             }
         });
-        EditText mEditText2 = (EditText) v.findViewById(R.id.editText3);
-        mEditText2.setOnClickListener(new View.OnClickListener() {
+        EditText destEditText = v.findViewById(R.id.editText3);
+        destEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
 /*
@@ -90,6 +95,17 @@ public class FragmentOne extends Fragment {
                 }
             }
         });
+
+        Button stroll = v.findViewById(R.id.btn2);
+        stroll.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                intent.putExtra("FAVES_OR_SEARCH","search");
+                intent.putExtra("origin",origin);
+                intent.putExtra("dest",dest);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 
@@ -100,7 +116,10 @@ public class FragmentOne extends Fragment {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt = getView().findViewById(R.id.editText4);
                 txt.setText(place.getName());
-                Log.d("successful", "Place: " + place.getName());
+                LatLng originll = place.getLatLng();
+                lat = originll.latitude;
+                lng = originll.longitude;
+                origin = lat.toString() + "," + lng.toString();
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Log.d("error", status.getStatusMessage());
@@ -112,7 +131,11 @@ public class FragmentOne extends Fragment {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt2 = getView().findViewById(R.id.editText3);
                 txt2.setText(place.getName());
-                Log.d("successful2", "Place: " + place.getName());
+                LatLng destll = place.getLatLng();
+                lat = destll.latitude;
+                lng = destll.longitude;
+                dest = lat.toString() + "," + lng.toString();
+                Log.d("dest",dest);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Log.d("error", status.getStatusMessage());
