@@ -55,10 +55,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         List<LatLng> points = options.getPoints();
         LatLng startLoc = points.get(0);
         LatLng endLoc = points.get(points.size()-1);
-
-        double newLat=(startLoc.latitude+endLoc.latitude)/2;
-        double newLon=(startLoc.longitude+endLoc.longitude)/2;
-        LatLng originLoc = new LatLng(newLat,newLon);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 20));
 
         mMap.addMarker(new MarkerOptions()

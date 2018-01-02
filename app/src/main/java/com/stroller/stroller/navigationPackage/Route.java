@@ -15,7 +15,6 @@ public class Route {
     public String startAddress;
     public LatLng startLocation;
     public String instructions;
-    public String encodedPoints;
 
     public List<LatLng> points;
 }

@@ -2,7 +2,9 @@ package com.stroller.stroller;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -61,7 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
     Integer[] imgIds={R.drawable.attractive,R.drawable.menu,R.drawable.tree,R.drawable.shoppingbag};
     public String instruct = "";
-    public String points = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,10 +126,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         /*googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
-                        this, R.raw.style_json));
-        48.8550287,2.353679,16.3z
-        LatLng originLoc = new LatLng(48.8550287, 2.353679);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));*/
+                        this, R.raw.style_json));*/
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -146,8 +144,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait.",
-                "Finding direction..!", true);
+        progressDialog = ProgressDialog.show(this, "Please wait...",
+                "Stroller is working its magic", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -176,6 +174,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
+            if(route.duration.value > 10800){
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+                alertBuilder.setTitle("Hold On")
+                        .setMessage("Strolling this route will take more than three hours!")
+                        .setNegativeButton("Change Route", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                                Intent intent = new Intent(MapsActivity.this, SearchActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return;
+            }
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
             double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
             LatLng originLoc = new LatLng(newLat,newLon);
@@ -233,7 +246,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             polylinePaths.add(currentLine);
 
             instruct = route.instructions;
-            points = route.encodedPoints;
         }
     }
 

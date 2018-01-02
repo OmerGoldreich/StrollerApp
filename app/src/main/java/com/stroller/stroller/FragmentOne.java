@@ -1,5 +1,7 @@
 package com.stroller.stroller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -27,8 +29,9 @@ public class FragmentOne extends Fragment {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
     int PLACE_PICKER_REQUEST = 1;
     int PLACE_PICKER_REQUEST2 = 2;
-    String origin;
-    String dest;
+    AlertDialog dialog;
+    String origin = "";
+    String dest = "";
     Double lat;
     Double lng;
 
@@ -99,6 +102,20 @@ public class FragmentOne extends Fragment {
         Button stroll = v.findViewById(R.id.btn2);
         stroll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                if(origin.equals("") || dest.equals("")){
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+                    alertBuilder.setTitle("Hold On")
+                            .setMessage("You need to choose an origin and a destination")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    closeDialog();
+                            }
+                    });
+                    dialog = alertBuilder.show();
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
                 intent.putExtra("FAVES_OR_SEARCH","search");
                 intent.putExtra("origin",origin);
@@ -135,13 +152,18 @@ public class FragmentOne extends Fragment {
                 lat = destll.latitude;
                 lng = destll.longitude;
                 dest = lat.toString() + "," + lng.toString();
-                Log.d("dest",dest);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 Log.d("error", status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
+        }
+    }
+
+    private void closeDialog(){
+        if(dialog != null){
+            dialog.dismiss();
         }
     }
 }
