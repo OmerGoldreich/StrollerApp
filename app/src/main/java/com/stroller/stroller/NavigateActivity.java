@@ -2,6 +2,8 @@ package com.stroller.stroller;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +38,13 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        String htmlInstruct = getIntent().getStringExtra("instruct");
+        String destInstruct = htmlInstruct.replaceAll("<div.*?>","\n\n- ");
+        String instruct = destInstruct.replaceAll("<.*?>", "");
+        TextView box = findViewById(R.id.instructions);
+        box.setText(instruct);
+        box.setMovementMethod(new ScrollingMovementMethod());
     }
 
     @Override
@@ -50,16 +59,16 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         double newLat=(startLoc.latitude+endLoc.latitude)/2;
         double newLon=(startLoc.longitude+endLoc.longitude)/2;
         LatLng originLoc = new LatLng(newLat,newLon);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 20));
 
         mMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
-                .title("start")
+                .title("Start")
                 .position(startLoc));
 
         mMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
-                .title("end")
+                .title("End")
                 .position(endLoc));
 
 

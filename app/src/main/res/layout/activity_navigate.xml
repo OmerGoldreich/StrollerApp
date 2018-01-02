@@ -1,8 +1,61 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stroller.stroller.NavigateActivity" />
+    tools:context="com.stroller.stroller.NavigateActivity"
+    android:orientation="vertical"
+    android:background="@drawable/blurprg2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="826dp"
+        android:layout_weight="1.0"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/roundbgmap"
+        map:layout_constraintBottom_toBottomOf="parent"
+        map:layout_constraintEnd_toEndOf="parent"
+        map:layout_constraintStart_toStartOf="parent"
+        map:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/instructions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="50"
+            android:scrollbars="vertical"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:textSize="20sp"
+            android:textColor="#585252"
+            android:text="TextView"/>
+
+    </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>

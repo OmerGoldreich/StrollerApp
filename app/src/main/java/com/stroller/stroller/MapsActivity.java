@@ -86,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         stroll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MapsActivity.this, NavigateActivity.class);
+                intent.putExtra("instruct",instruct);
                 startActivity(intent);
             }
         });

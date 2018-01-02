@@ -122,8 +122,9 @@ public class DirectionFinder {
                 JSONArray jsonSteps = jsonLeg.getJSONArray("steps");
                 for(int k = 0; k < jsonSteps.length(); k++){
                     JSONObject step = jsonSteps.getJSONObject(k);
+                    instruct = instruct.concat("- ");
                     instruct = instruct.concat(step.getString("html_instructions"));
-                    instruct = instruct.concat("\n");
+                    instruct = instruct.concat("\n\n");
                 }
             }
 
