@@ -2,12 +2,11 @@ package com.stroller.stroller;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -175,18 +174,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for (Route route : routes) {
             if(route.duration.value > 10800){
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-                alertBuilder.setTitle("Hold On")
-                        .setMessage("Strolling this route will take more than three hours!")
-                        .setNegativeButton("Change Route", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                                Intent intent = new Intent(MapsActivity.this, SearchActivity.class);
-                                startActivity(intent);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
+                CustomDialog dialog = new CustomDialog(MapsActivity.this, 1);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
                 return;
             }
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;

@@ -3,6 +3,8 @@ package com.stroller.stroller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -103,17 +105,9 @@ public class FragmentOne extends Fragment {
         stroll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(origin.equals("") || dest.equals("")){
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-                    alertBuilder.setTitle("Hold On")
-                            .setMessage("You need to choose an origin and a destination")
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setNegativeButton("Go Back", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    closeDialog();
-                            }
-                    });
-                    dialog = alertBuilder.show();
+                    CustomDialog dialog = new CustomDialog(getActivity(), 0);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
                     return;
                 }
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
