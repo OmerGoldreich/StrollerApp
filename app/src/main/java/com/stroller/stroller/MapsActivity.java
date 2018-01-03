@@ -77,8 +77,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
         AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                ViewDialog alert = new ViewDialog();
-                alert.showDialog((Activity) v.getContext(), "Give this route a name");
+                /*ViewDialog alert = new ViewDialog();
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alert.showDialog((Activity) v.getContext());*/
+                ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alert.show();
             }
         });
 

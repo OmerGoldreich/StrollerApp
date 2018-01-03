@@ -1,7 +1,8 @@
 package com.stroller.stroller;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
@@ -11,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -75,7 +75,7 @@ public class FragmentTwo extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_two, container, false);
 
-        final ListView lstItems = (ListView)v.findViewById(R.id.favesList);
+        final ListView lstItems = v.findViewById(R.id.favesList);
 
         //customized list
 
@@ -143,9 +143,7 @@ public class FragmentTwo extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
-
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -155,15 +153,17 @@ public class FragmentTwo extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.edit:
-                ViewDialogChangeRoadName alert = new ViewDialogChangeRoadName(itemValueStr);
-                alert.showDialog(getActivity(), "set a new name for the road");
-                return true;
+                ViewDialog alert = new ViewDialog(getActivity(), itemValueStr, 1);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alert.show();
+                break;
             case R.id.delete:
                 deleteFromDataBase(itemValueStr);
                 return true;
             default:
                 return super.onContextItemSelected(item);
         }
+        return super.onContextItemSelected(item);
     }
 
     private void deleteFromDataBase(String s) {

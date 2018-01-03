@@ -15,13 +15,19 @@
     <string name="FAVES_OR_SEARCH">get value of 1 or 2</string>
     <string name="youMadeIT">You have reached your destination!</string>
     <string name="tell_us_how_you_feel">How was your experience?</string>
-    <string name="whyRate">Let us know you better. Rating your route will help us improve the experience of other users.</string>
+    <string name="whyRate">Help us do a better job. Rating your route will improve the experience of other users.</string>
     <string name="title_activity_store_favorites">storeFavorites</string>
-    <string name="addtoFaves_text_dialog"> Give this road a name</string>
+    <string name="addtoFaves_text_dialog">Choose Name</string>
+    <string name="change_name">Change Name</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_navigate">Map</string>
     <string name="orig_dest">You need to choose an origin and a destination.</string>
     <string name="duration">Strolling this route will take more than three hours.</string>
+    <string name="hold">Hold On</string>
+    <string name="back">Go Back</string>
+    <string name="example">e.g. Montmartre, Paris</string>
+    <string name="add">Add to Favorites</string>
+    <string name="update">Update</string>
 
 
 </resources>

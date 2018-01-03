@@ -10,18 +10,22 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+
 public class CustomDialog extends Dialog implements
         android.view.View.OnClickListener {
 
     public Activity activity;
     public Button back;
     private int activity_id;
+    private TextView errorMessage;
 
     public CustomDialog(Activity actv, int actv_id) {
         super(actv);
         // TODO Auto-generated constructor stub
         this.activity = actv;
         this.activity_id = actv_id;
+        this.errorMessage = activity.findViewById(R.id.errorMessage);
+        Log.d("isNull", errorMessage == null ? "yes" : "no");
     }
 
     @Override

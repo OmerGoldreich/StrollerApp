@@ -40,8 +40,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         mapFragment.getMapAsync(this);
 
         String htmlInstruct = getIntent().getStringExtra("instruct");
-        String destInstruct = htmlInstruct.replaceAll("<div.*?>","\n\n- ");
-        String instruct = destInstruct.replaceAll("<.*?>", "");
+        htmlInstruct = htmlInstruct.replaceAll("&nbsp;","");
+        htmlInstruct = htmlInstruct.replaceAll("<div.*?>","\n\n- ");
+        String instruct = htmlInstruct.replaceAll("<.*?>", "");
         TextView box = findViewById(R.id.instructions);
         box.setText(instruct);
         box.setMovementMethod(new ScrollingMovementMethod());
