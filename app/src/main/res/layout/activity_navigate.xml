@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="826dp"
+        android:layout_height="864dp"
         android:layout_weight="1.0"
         android:orientation="vertical">
 
@@ -22,40 +22,74 @@
             map:layout_constraintEnd_toEndOf="parent"
             map:layout_constraintStart_toStartOf="parent"
             map:layout_constraintTop_toTopOf="parent" />
+
     </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.0"
-        android:orientation="vertical">
+        android:layout_weight="1.0">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/roundbgmap"
-        map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
-        map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/instructions"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLines="50"
-            android:scrollbars="vertical"
-            android:paddingLeft="5dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/roundbgmap"
+            map:layout_constraintBottom_toBottomOf="parent"
+            map:layout_constraintEnd_toEndOf="parent"
+            map:layout_constraintStart_toStartOf="parent"
+            map:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/instructions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="sans-serif-condensed"
+                android:maxLines="50"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:scrollbars="vertical"
+                android:textColor="#585252"
+                android:textSize="20sp" />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/rounded_edittext"
             android:paddingTop="5dp"
-            android:textSize="20sp"
-            android:textColor="#585252"
-            android:text="TextView"/>
+            android:paddingBottom="5dp"
+            android:textAlignment="center"
+            android:textColor="#FF8765"
+            map:layout_constraintStart_toEndOf="@+id/constraintLayout"
+            map:layout_constraintTop_toTopOf="parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
 
+        <ImageButton
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext"
+            android:src="@drawable/stop"
+            map:layout_constraintStart_toEndOf="@+id/constraintLayout"
+            map:layout_constraintTop_toBottomOf="@+id/time"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:scaleType="fitCenter"/>
     </android.support.constraint.ConstraintLayout>
-    </android.support.constraint.ConstraintLayout>
-
 </LinearLayout>

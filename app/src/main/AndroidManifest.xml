@@ -79,9 +79,6 @@
             android:name=".UserFeedbackActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".storeFavesActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".NavigateActivity"
             android:label="@string/title_activity_navigate"
             android:screenOrientation="portrait" />

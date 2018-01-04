@@ -1,5 +1,6 @@
 package com.stroller.stroller;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -9,6 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,6 +57,26 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         TextView box = findViewById(R.id.instructions);
         box.setText(instruct);
         box.setMovementMethod(new ScrollingMovementMethod());
+        ImageButton stop = findViewById(R.id.stop);
+        stop.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(NavigateActivity.this, UserFeedbackActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        String duration = MapsActivity.duration;
+        duration = duration.replaceAll(" ","");
+        duration = duration.replaceAll("mins","m");
+        duration = duration.replaceAll("hours","h\n");
+        duration = duration.replaceAll("hour","h\n");
+        if(duration.indexOf("h") == -1){
+            duration = "0h\n".concat(duration);
+        }
+
+        TextView display = findViewById(R.id.time);
+        display.setText(duration);
     }
 
     @Override

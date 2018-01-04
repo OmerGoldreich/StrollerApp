@@ -28,6 +28,8 @@
     <string name="example">e.g. Montmartre, Paris</string>
     <string name="add">Add to Favorites</string>
     <string name="update">Update</string>
+    <string name="wait">Please Wait</string>
+    <string name="magic">Stroller is working its magic</string>
 
 
 </resources>

@@ -65,12 +65,14 @@ public class ViewDialog extends Dialog implements
     public void onClick(View v) {
         EditText roadGivenName = findViewById(R.id.road_name);
         final String roadname = roadGivenName.getText().toString();
-        if(caller_id == 0){
-            addinputToDataBase(roadname);
-            dismiss();
-        } else{
-            changeInputInDataBase(roadname, old_road_name);
-            dismiss();
+        if(!roadname.equals("")){
+            if(caller_id == 0){
+                addinputToDataBase(roadname);
+                dismiss();
+            } else{
+                changeInputInDataBase(roadname, old_road_name);
+                dismiss();
+            }
         }
     }
 

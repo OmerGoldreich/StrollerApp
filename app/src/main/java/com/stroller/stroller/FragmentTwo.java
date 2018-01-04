@@ -96,7 +96,7 @@ public class FragmentTwo extends Fragment {
         //NOTE: Unless you are signed in, this will not be useable.
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = "user9";         // should be userID = user.getUid();
+        userID = "user8";         // should be userID = user.getUid();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");

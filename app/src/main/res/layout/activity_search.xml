@@ -22,6 +22,7 @@
         android:textColor="#646464" />
 
     <ImageView
+        android:id="@+id/user"
         android:layout_width="200dp"
         android:layout_height="170dp"
         android:paddingBottom="20dp"
