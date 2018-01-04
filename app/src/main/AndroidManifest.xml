@@ -83,8 +83,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".NavigateActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_navigate"/>
+            android:label="@string/title_activity_navigate"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

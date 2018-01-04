@@ -224,8 +224,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             for(LatLng location : interestingPointsOnTheWay.keySet()){
                 mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                .position(location));
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
+                        .position(location));
             }
 
             polylineOptions = new PolylineOptions().
