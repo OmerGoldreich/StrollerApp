@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="sans-serif-condensed"
-                android:maxLines="50"
+                android:maxLines="100"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
                 android:scrollbars="vertical"

@@ -44,7 +44,9 @@
 
             android:layout_marginBottom="60dp"
             android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
             android:layout_marginTop="6dp"
             android:background="@drawable/roundbgmap"
             map:layout_constraintBottom_toBottomOf="parent"
@@ -55,47 +57,62 @@
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:baselineAligned="false"
-                android:src="@drawable/attractive"
+                android:src="@drawable/eyeheart"
                 map:layout_constraintStart_toStartOf="parent"
-                map:layout_constraintTop_toTopOf="parent" />
+                map:layout_constraintTop_toTopOf="parent"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:baselineAligned="false"
-                android:src="@drawable/attractive"
+                android:src="@drawable/eyeheart"
                 map:layout_constraintStart_toStartOf="parent"
-                map:layout_constraintTop_toBottomOf="@+id/imageView1" />
+                map:layout_constraintTop_toBottomOf="@+id/imageView1"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:baselineAligned="false"
-                android:src="@drawable/attractive"
+                android:src="@drawable/eyeheart"
                 map:layout_constraintStart_toStartOf="parent"
-                map:layout_constraintTop_toBottomOf="@+id/imageView2" />
+                map:layout_constraintTop_toBottomOf="@+id/imageView2"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
                 android:baselineAligned="false"
-                android:src="@drawable/attractive"
+                android:src="@drawable/eyeheart"
                 map:layout_constraintLeft_toLeftOf="parent"
-                map:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                map:layout_constraintTop_toBottomOf="@+id/imageView3"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -167,25 +184,34 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/roundbgimagebuttons"
-            android:src="@drawable/care"
-
+            android:layout_height="45dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/rounded_edittext"
+            android:src="@drawable/favorite"
             map:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            map:layout_constraintTop_toTopOf="parent" />
-
+            map:layout_constraintTop_toTopOf="parent"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:scaleType="fitCenter"/>
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_width="45dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/roundbgimagebuttons"
-            android:src="@drawable/route"
+            android:background="@drawable/rounded_edittext"
+            android:src="@drawable/routeset"
             map:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            map:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            map:layout_constraintTop_toBottomOf="@+id/imageButton"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            />
 
         <Button
             android:id="@+id/button2"
@@ -209,6 +235,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="120dp"
+            android:layout_marginRight="120dp"
             android:layout_marginTop="13dp"
             android:background="@null"
             android:elevation="2dp"

@@ -62,7 +62,7 @@ class CustomAdapter extends BaseAdapter {
         textView.setText((CharSequence) mylist.get(position));
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.list_loc_icon);
-        imageView.setImageResource(R.drawable.like);
+        imageView.setImageResource(R.drawable.like2);
 
 
 

@@ -110,7 +110,7 @@ public class FragmentOne extends Fragment {
                     dialog.show();
                     return;
                 }
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                Intent intent = new Intent(getActivity(), LoadingActivity.class);
                 intent.putExtra("FAVES_OR_SEARCH","search");
                 intent.putExtra("origin",origin);
                 intent.putExtra("dest",dest);

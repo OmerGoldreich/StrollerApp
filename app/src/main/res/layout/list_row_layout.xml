@@ -6,16 +6,21 @@
 
     <ImageView
         android:id="@+id/list_loc_icon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:paddingTop="15dp">
-    </ImageView>
+        android:layout_width="35dp"
+        android:layout_height="45dp"
+        android:adjustViewBounds="true"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/like2"></ImageView>
 
     <TextView
         android:id="@+id/row_text"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:text="@+id/row_text"
+        android:text="hello"
         android:textSize="20dp"
         android:paddingTop="10dp"
         android:paddingLeft="10dp">

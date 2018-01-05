@@ -58,9 +58,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Marker> destinationMarkers = new ArrayList<>();
     private HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
-    private ProgressDialog progressDialog;
     String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
-    Integer[] imgIds={R.drawable.attractive,R.drawable.menu,R.drawable.tree,R.drawable.shoppingbag};
+    Integer[] imgIds={R.drawable.eyeheart,R.drawable.menucafe,R.drawable.tree2,R.drawable.bagshop};
     public String instruct = "";
     public static String duration = "";
     @Override
@@ -78,9 +77,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
         AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                /*ViewDialog alert = new ViewDialog();
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                alert.showDialog((Activity) v.getContext());*/
                 ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 alert.show();
@@ -148,8 +144,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait...",
-                "Stroller is working its magic", true);
 
         if (originMarkers != null) {
             for (Marker marker : originMarkers) {
@@ -172,7 +166,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onDirectionFinderSuccess(List<Route> routes) {
-        progressDialog.dismiss();
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
         destinationMarkers = new ArrayList<>();
@@ -197,31 +190,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
                     .title(route.endAddress)
                     .position(route.endLocation)));
-
-
-            /*for(LatLng location : interestingPointsOnTheWay.keySet()){
-                String val = interestingPointsOnTheWay.get(location);
-                if(val.equals("restaurant")){
-                    mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                            .position(location));
-                }
-                if(val.equals("selfie")){
-                    mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                            .position(location));
-                }
-                if(val.equals("park")){
-                    mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                            .position(location));
-                }
-                if(val.equals("shopping")){
-                    mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                            .position(location));
-                }
-            }*/
 
             for(LatLng location : interestingPointsOnTheWay.keySet()){
                 mMap.addMarker(new MarkerOptions()
