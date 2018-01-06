@@ -19,7 +19,7 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
         TextView txt = findViewById(R.id.appname);
         txt.setTextSize(25);
-        txt.setText("S T R O L L E R\nIS WORKING ITS MAGIC");
+        txt.setText("S T R O L L E R\nI S  W O R K I N G  I T S  M A G I C");
         ImageView[] images = {findViewById(R.id.icon5),findViewById(R.id.icon15),findViewById(R.id.icon11),findViewById(R.id.icon23),findViewById(R.id.icon8),findViewById(R.id.icon17),findViewById(R.id.icon26),findViewById(R.id.icon9),findViewById(R.id.icon3),findViewById(R.id.icon21),findViewById(R.id.icon4),findViewById(R.id.icon14),findViewById(R.id.icon27),findViewById(R.id.icon20),findViewById(R.id.icon7),findViewById(R.id.icon18),findViewById(R.id.icon1),findViewById(R.id.icon22),findViewById(R.id.icon12),findViewById(R.id.icon24),findViewById(R.id.icon25),findViewById(R.id.icon19),findViewById(R.id.icon10),findViewById(R.id.icon2),findViewById(R.id.icon28),findViewById(R.id.icon13),findViewById(R.id.icon16),findViewById(R.id.icon30),findViewById(R.id.icon29),findViewById(R.id.icon6)};
 
         new Handler().postDelayed(new Runnable() {
