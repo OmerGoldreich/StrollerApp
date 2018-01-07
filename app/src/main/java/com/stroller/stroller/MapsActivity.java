@@ -94,8 +94,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             imageViews[i].setImageResource(imgIds[i]);
             textViews[i].setText(descriptions[i]);
         }
-
     }
+
     private void sendRequest() {
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
         String duration_from_faves = FragmentTwo.duration_from_faves;
@@ -103,6 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(from_faves_or_search.equals("faves")){
             List<LatLng> points=FragmentTwo.faves_polyline;
+            decodedPolylineMaps = points;
             LatLng startLoc = points.get(0);
             LatLng endLoc = points.get(points.size() - 1);
             duration = duration_from_faves;

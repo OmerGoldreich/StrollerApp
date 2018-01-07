@@ -126,7 +126,7 @@ public class FragmentOne extends Fragment {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt = getView().findViewById(R.id.editText4);
-                txt.setText(place.getName());
+                txt.setText(place.getAddress());
                 LatLng originll = place.getLatLng();
                 lat = originll.latitude;
                 lng = originll.longitude;
@@ -141,7 +141,7 @@ public class FragmentOne extends Fragment {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt2 = getView().findViewById(R.id.editText3);
-                txt2.setText(place.getName());
+                txt2.setText(place.getAddress());
                 LatLng destll = place.getLatLng();
                 lat = destll.latitude;
                 lng = destll.longitude;

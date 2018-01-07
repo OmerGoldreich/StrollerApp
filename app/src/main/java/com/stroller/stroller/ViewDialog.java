@@ -3,6 +3,7 @@ package com.stroller.stroller;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -13,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -123,15 +125,59 @@ public class ViewDialog extends Dialog implements
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");
         currentUserRef = usersListRef.child(userID); // should be         currentUserRef = usersListRef.child(userID);
-        Query toBeChangedStringQuery = currentUserRef.orderByValue().equalTo(oldInput);
-        toBeChangedStringQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        final DatabaseReference newRoadNode = currentUserRef.child(newInput);
+        final DatabaseReference oldRoadNode = currentUserRef.child(oldInput);
+
+        newRoadNode.child("road_name").setValue(newInput);
+
+        DatabaseReference oldRoadDurationRef = oldRoadNode.child("duration");
+        DatabaseReference oldRoadInstructionsRef = oldRoadNode.child("instructions");
+        DatabaseReference oldRoadPointsRef = oldRoadNode.child("road");
+
+        oldRoadDurationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                String oldDuration = dataSnapshot.getValue(String.class);
+                newRoadNode.child("duration").setValue(oldDuration);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+        oldRoadInstructionsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String oldInstructions = dataSnapshot.getValue(String.class);
+                newRoadNode.child("instructions").setValue(oldInstructions);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        oldRoadPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index=0;
+                for(DataSnapshot childDS: dataSnapshot.getChildren()){
+                    double lat = childDS.child("latitude").getValue(Double.class);
+                    double lng = childDS.child("longitude").getValue(Double.class);
+                    newRoadNode.child("road").child(String.valueOf(index)).child("latitude").setValue(lat);
+                    newRoadNode.child("road").child(String.valueOf(index)).child("longitude").setValue(lng);
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoadNode.removeValue();
     }
 }
