@@ -45,66 +45,14 @@ class CustomAdapter extends BaseAdapter {
         return position;
     }
 
-
-
-    private class Holder{
-        TextView textView;
-        ImageView imageView;
-        Spinner spinner;
-    }
-    private Holder holder;
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView;
         rowView = inflater.inflate(R.layout.list_row_layout, null);
         TextView textView = (TextView) rowView.findViewById(R.id.row_text);
         textView.setText((CharSequence) mylist.get(position));
-
         ImageView imageView = (ImageView) rowView.findViewById(R.id.list_loc_icon);
         imageView.setImageResource(R.drawable.like2);
-
-
-
-/*
-        if(convertView==null){
-            Holder holder = new Holder();
-            if(holder==null)return convertView;
-            inflater= (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_row_layout,null);
-            holder.textView = (TextView) convertView.findViewById(R.id.row_text) ;
-            holder.imageView = (ImageView) convertView.findViewById(R.id.list_loc_icon);
-            holder.spinner = (Spinner)convertView.findViewById(R.id.spinner);
-            convertView.setTag(holder);
-        }
-        else{
-            holder = (Holder)convertView.getTag();
-            if(holder==null)return convertView;
-
-        }
-        holder.textView.setText((CharSequence) mylist.get(position));
-        holder.imageView.setImageResource(R.drawable.like);
-        if(holder.spinner==null){return convertView;}
-        holder.spinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(context, view);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater().inflate(R.menu.options_menu, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        return true;
-                    }
-                });
-
-                popup.show();//showing popup menu
-            }
-        });
-
-        */
         return rowView;
     }
 }

@@ -1,6 +1,7 @@
 package com.stroller.stroller.navigationPackage;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -23,10 +24,12 @@ import java.util.List;
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json??optimize=true&mode=walking&";
     private static final String GOOGLE_API_KEY = "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"; //this is stroller's
+    private static Route json;
     private DirectionFinderListener listener;
     private String origin;
     private String destination;
     private String whatPageBroughtMeHere;
+    public static List<LatLng> decodedPolyline;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination,String faves_or_search) {
         this.listener = listener;
@@ -37,9 +40,8 @@ public class DirectionFinder {
     public void execute() throws UnsupportedEncodingException, JSONException {
         listener.onDirectionFinderStart();
         new DownloadRawData().execute(createUrl());
-        //List<Route> parsedRoute = parseJSon(createUrl()); //new line 23.12
-        //return parsedRoute;//new line 23.12
     }
+
 
     private String createUrl() throws UnsupportedEncodingException {
         String urlOrigin = URLEncoder.encode(origin, "utf-8");
@@ -80,11 +82,13 @@ public class DirectionFinder {
         protected void onPostExecute(String res) {
             try {
                 parseJSon(res);
+                DirectionFinder.json=parseJSonReturnRoute(res); //.new by tala
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     private void parseJSon(String data) throws JSONException {
         if(data==null)
@@ -114,6 +118,7 @@ public class DirectionFinder {
             route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
             route.endLocation = new LatLng(jsonEndLocation.getDouble("lat"), jsonEndLocation.getDouble("lng"));
             route.points = decodePolyLine(overview_polylineJson.getString("points"));
+            this.decodedPolyline = route.points;
 
             //get navigation instructions
             for(int j = 0; j < jsonLegs.length(); j++){
@@ -133,6 +138,61 @@ public class DirectionFinder {
 
         listener.onDirectionFinderSuccess(routes);
     }
+
+
+    private Route parseJSonReturnRoute(String data) throws JSONException {
+        if(data==null)
+            return null;
+
+        List<Route> routes = new ArrayList<Route>();
+        JSONObject jsonData = new JSONObject(data);
+        JSONArray jsonRoutes = jsonData.getJSONArray("routes");
+        for (int i = 0; i < jsonRoutes.length(); i++) {
+            JSONObject jsonRoute = jsonRoutes.getJSONObject(i);
+            Route route = new Route();
+            String instruct = "";
+
+            JSONObject overview_polylineJson = jsonRoute.getJSONObject("overview_polyline");
+            JSONArray jsonLegs = jsonRoute.getJSONArray("legs");
+            JSONObject jsonStartingLeg = jsonLegs.getJSONObject(0);
+            JSONObject jsonFinalLeg = jsonLegs.getJSONObject(jsonLegs.length()-1);
+            JSONObject jsonDistance = jsonStartingLeg.getJSONObject("distance");
+            JSONObject jsonDuration = jsonStartingLeg.getJSONObject("duration");
+            JSONObject jsonEndLocation = jsonFinalLeg.getJSONObject("end_location");
+            JSONObject jsonStartLocation = jsonStartingLeg.getJSONObject("start_location");
+
+            route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
+            route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
+            route.endAddress = jsonFinalLeg.getString("end_address");
+            route.startAddress = jsonStartingLeg.getString("start_address");
+            route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
+            route.endLocation = new LatLng(jsonEndLocation.getDouble("lat"), jsonEndLocation.getDouble("lng"));
+            route.points = decodePolyLine(overview_polylineJson.getString("points"));
+            this.decodedPolyline = route.points;
+            if(this.decodedPolyline!=null)
+                Log.d("DirectionFinder_decoded", "decodedPolyline is not null");
+
+            //get navigation instructions
+            for(int j = 0; j < jsonLegs.length(); j++){
+                JSONObject jsonLeg = jsonLegs.getJSONObject(j);
+                JSONArray jsonSteps = jsonLeg.getJSONArray("steps");
+                for(int k = 0; k < jsonSteps.length(); k++){
+                    JSONObject step = jsonSteps.getJSONObject(k);
+                    instruct = instruct.concat("- ");
+                    instruct = instruct.concat(step.getString("html_instructions"));
+                    instruct = instruct.concat("\n\n");
+                }
+            }
+
+            route.instructions = instruct;
+            routes.add(route);
+        }
+        Log.d("myTag", "there are"+routes.size()+"routes\n");
+        Log.d("myTag1","route points "+routes.get(0).points);
+
+        return routes.get(0); //in our app there will only be one route
+    }
+
 
     private List<LatLng> decodePolyLine(final String poly) {
         int len = poly.length();
@@ -170,4 +230,10 @@ public class DirectionFinder {
 
         return decoded;
     }
+
+
+    public Route getRoute(){
+        return this.json;
+    }
+
 }

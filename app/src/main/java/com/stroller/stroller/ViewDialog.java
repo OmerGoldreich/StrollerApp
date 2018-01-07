@@ -3,11 +3,14 @@ package com.stroller.stroller;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,6 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.stroller.stroller.navigationPackage.DirectionFinder;
+import com.stroller.stroller.navigationPackage.Route;
+
+import java.util.List;
 
 /**
  * Created by tala on 20-Dec-17.
@@ -34,7 +41,9 @@ public class ViewDialog extends Dialog implements
     private DatabaseReference myRef= mFirebaseDatabase.getReference();
     private DatabaseReference usersListRef = myRef.child("users");
     private DatabaseReference currentUserRef;
-    private String userID = "user9";
+    private String userID = "user6";
+    PolylineOptions roadOnMap = MapsActivity.getLineOptions();
+    private List<LatLng> decodedPolyline;
 
     private String old_road_name = "";
     private int caller_id;
@@ -46,6 +55,13 @@ public class ViewDialog extends Dialog implements
         this.activity = actv;
         this.caller_id = id;
         this.old_road_name = itemValueStr;
+    }
+    public ViewDialog(Activity actv, String itemValueStr, int id, List<LatLng> decodedPolyline){
+        super(actv);
+        this.activity = actv;
+        this.caller_id = id;
+        this.old_road_name = itemValueStr;
+        this.decodedPolyline = decodedPolyline;
     }
 
     @Override
@@ -77,19 +93,18 @@ public class ViewDialog extends Dialog implements
     }
 
     private void addinputToDataBase(final String input) {
-
         currentUserRef = usersListRef.child(userID); // should be  currentUserRef = usersListRef.child(userID);
-        currentUserRef.push().setValue(input);
 
-
-        /*currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(input)){
-                    //print "this name already exists in dialog"
                 }
                 else{
-                    currentUserRef.push().setValue(input);
+                    currentUserRef.child(input).child("road_name").setValue(input);
+                    currentUserRef.child(input).child("road").setValue(decodedPolyline);
+                    currentUserRef.child(input).child("duration").setValue(MapsActivity.duration);
+                    currentUserRef.child(input).child("instructions").setValue(MapsActivity.instructions);
                 }
             }
 
@@ -97,25 +112,21 @@ public class ViewDialog extends Dialog implements
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });*/
+        });
     }
 
     private void changeInputInDataBase(final String newInput,String oldInput) {
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = "user9";         // should be userID = user.getUid();
+        userID = "user6";         // should be userID = user.getUid();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");
         currentUserRef = usersListRef.child(userID); // should be         currentUserRef = usersListRef.child(userID);
-
         Query toBeChangedStringQuery = currentUserRef.orderByValue().equalTo(oldInput);
         toBeChangedStringQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    ds.getRef().setValue(newInput);
-                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

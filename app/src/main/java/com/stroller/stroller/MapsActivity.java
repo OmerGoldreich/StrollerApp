@@ -62,6 +62,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Integer[] imgIds={R.drawable.eyeheart,R.drawable.menucafe,R.drawable.tree2,R.drawable.bagshop};
     public String instruct = "";
     public static String duration = "";
+    private static List<LatLng> decodedPolylineMaps;
+    public static String instructions="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,17 +75,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        sendRequest();
-
-        //added by Tala 19.12.17
-        final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
-        AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                alert.show();
-            }
-        });
 
         Button stroll = findViewById(R.id.button2);
         stroll.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +97,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private void sendRequest() {
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
+        String duration_from_faves = FragmentTwo.duration_from_faves;
+        String instructions_from_faves = FragmentTwo.instructions_from_faves;
+
+        if(from_faves_or_search.equals("faves")){
+            List<LatLng> points=FragmentTwo.faves_polyline;
+            LatLng startLoc = points.get(0);
+            LatLng endLoc = points.get(points.size() - 1);
+            duration = duration_from_faves;
+            instruct = instructions_from_faves;
+
+            if(mMap!=null){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 14));
+
+                mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
+                        .title("Start")
+                        .position(startLoc));
+
+                mMap.addMarker(new MarkerOptions()
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
+                        .title("End")
+                        .position(endLoc));
+
+
+                polylineOptions = new PolylineOptions().
+                        geodesic(true).
+                        color(Color.parseColor("#FF8765")).
+                        width(15);
+                for(LatLng point:points){
+                    polylineOptions.add(point);
+                }
+                Polyline currentLine = mMap.addPolyline(polylineOptions);
+                currentLine.setPattern(PATTERN_POLYLINE_DOTTED);
+                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.setMinZoomPreference(11);
+            }
+            return;
+        }
+
         String origin = getIntent().getStringExtra("origin");
         String destination = getIntent().getStringExtra("dest");
         try {
@@ -139,6 +171,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         mMap.setMyLocationEnabled(true);
+        sendRequest();
+
+        final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
+        AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0,decodedPolylineMaps);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alert.show();
+            }
+        });
     }
 
 
@@ -209,8 +251,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             polylinePaths.add(currentLine);
 
             instruct = route.instructions;
+            instructions=instruct;
             duration = route.duration.text;
         }
+        this.decodedPolylineMaps = routes.get(0).points;
     }
 
     public static PolylineOptions getLineOptions(){
