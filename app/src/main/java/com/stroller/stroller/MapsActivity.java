@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
@@ -108,7 +109,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             instruct = instructions_from_faves;
 
             if(mMap!=null){
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 14));
+                double upperLat;
+                double lowerLat;
+                LatLngBounds bounds;
+                if(startLoc.latitude > endLoc.latitude){
+                    upperLat = startLoc.latitude + 0.01;
+                    lowerLat = endLoc.latitude - 0.005;
+                    bounds = new LatLngBounds(new LatLng(lowerLat, endLoc.longitude),new LatLng(upperLat, startLoc.longitude));
+                } else {
+                    upperLat = endLoc.latitude + 0.01;
+                    lowerLat = startLoc.latitude - 0.005;
+                    bounds = new LatLngBounds(new LatLng(lowerLat, startLoc.longitude),new LatLng(upperLat, endLoc.longitude));
+                }
+                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
 
                 mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
@@ -219,10 +232,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 dialog.show();
                 return;
             }
-            double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
-            double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
-            LatLng originLoc = new LatLng(newLat,newLon);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc, 14));
+
+            double upperLat;
+            double lowerLat;
+            LatLngBounds bounds;
+            if(route.startLocation.latitude > route.endLocation.latitude){
+                upperLat = route.startLocation.latitude + 0.01;
+                lowerLat = route.endLocation.latitude - 0.005;
+                bounds = new LatLngBounds(new LatLng(lowerLat, route.endLocation.longitude),new LatLng(upperLat, route.startLocation.longitude));
+            } else {
+                upperLat = route.endLocation.latitude + 0.01;
+                lowerLat = route.startLocation.latitude - 0.005;
+                bounds = new LatLngBounds(new LatLng(lowerLat, route.startLocation.longitude),new LatLng(upperLat, route.endLocation.longitude));
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
