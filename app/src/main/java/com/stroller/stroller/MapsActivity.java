@@ -109,19 +109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             instruct = instructions_from_faves;
 
             if(mMap!=null){
-                double upperLat;
-                double lowerLat;
-                LatLngBounds bounds;
-                if(startLoc.latitude > endLoc.latitude){
-                    upperLat = startLoc.latitude + 0.01;
-                    lowerLat = endLoc.latitude - 0.005;
-                    bounds = new LatLngBounds(new LatLng(lowerLat, endLoc.longitude),new LatLng(upperLat, startLoc.longitude));
-                } else {
-                    upperLat = endLoc.latitude + 0.01;
-                    lowerLat = startLoc.latitude - 0.005;
-                    bounds = new LatLngBounds(new LatLng(lowerLat, startLoc.longitude),new LatLng(upperLat, endLoc.longitude));
-                }
-                mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 14));
 
                 mMap.addMarker(new MarkerOptions()
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
