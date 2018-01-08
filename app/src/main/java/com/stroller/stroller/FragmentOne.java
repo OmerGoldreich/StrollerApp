@@ -126,7 +126,9 @@ public class FragmentOne extends Fragment {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt = getView().findViewById(R.id.editText4);
-                txt.setText(place.getAddress());
+                CharSequence primaryAddress = place.getName();
+                if(isdigit(primaryAddress.charAt(0)))txt.setText(place.getAddress());
+                else{txt.setText(primaryAddress);}
                 LatLng originll = place.getLatLng();
                 lat = originll.latitude;
                 lng = originll.longitude;
@@ -141,7 +143,9 @@ public class FragmentOne extends Fragment {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
                 EditText txt2 = getView().findViewById(R.id.editText3);
-                txt2.setText(place.getAddress());
+                CharSequence primaryAddress = place.getName();
+                if(isdigit(primaryAddress.charAt(0)))txt2.setText(place.getAddress());
+                else{txt2.setText(primaryAddress);}
                 LatLng destll = place.getLatLng();
                 lat = destll.latitude;
                 lng = destll.longitude;
@@ -153,6 +157,11 @@ public class FragmentOne extends Fragment {
                 // The user canceled the operation.
             }
         }
+    }
+
+    private boolean isdigit(char c) {
+        if(c>=48 && c<=57)return true;
+        return false;
     }
 
     private void closeDialog(){
