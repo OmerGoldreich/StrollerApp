@@ -55,19 +55,7 @@ public class FragmentOne extends Fragment {
         EditText originEditText = v.findViewById(R.id.editText4);
         originEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                try {/*
-                    //newly added 28.12
-                    AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                           // .setTypeFilter(AutocompleteFilter.)
-                            .build();
-
-                    Intent intent =
-                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                                    .setFilter(typeFilter)
-                                    .build(getActivity());
-                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-
-*/
+                try {
                     PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                     startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
 
@@ -82,14 +70,6 @@ public class FragmentOne extends Fragment {
         destEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-/*
-                    Intent intent =
-                            new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                                    .build(getActivity());
-                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE2);
-*/
-
-
                     PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                     startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST2);
 
@@ -128,7 +108,7 @@ public class FragmentOne extends Fragment {
                 EditText txt = getView().findViewById(R.id.editText4);
                 CharSequence primaryAddress = place.getName();
                 if(isdigit(primaryAddress.charAt(0)))txt.setText(place.getAddress());
-                else{txt.setText(primaryAddress);}
+                else{txt.setText(primaryAddress + ", " + place.getAddress());}
                 LatLng originll = place.getLatLng();
                 lat = originll.latitude;
                 lng = originll.longitude;
@@ -145,7 +125,7 @@ public class FragmentOne extends Fragment {
                 EditText txt2 = getView().findViewById(R.id.editText3);
                 CharSequence primaryAddress = place.getName();
                 if(isdigit(primaryAddress.charAt(0)))txt2.setText(place.getAddress());
-                else{txt2.setText(primaryAddress);}
+                else{txt2.setText(primaryAddress + ", " + place.getAddress());}
                 LatLng destll = place.getLatLng();
                 lat = destll.latitude;
                 lng = destll.longitude;

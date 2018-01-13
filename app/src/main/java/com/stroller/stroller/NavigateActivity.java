@@ -2,6 +2,8 @@ package com.stroller.stroller;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -80,6 +82,12 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         display.setText(duration);
     }
 
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -91,12 +99,12 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 20));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
                 .title("Start")
                 .position(startLoc));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
                 .title("End")
                 .position(endLoc));
 

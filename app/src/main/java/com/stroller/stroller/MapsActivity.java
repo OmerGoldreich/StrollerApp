@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -114,12 +116,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 14));
 
                 mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
+                        .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
                         .title("Start")
                         .position(startLoc));
 
                 mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
+                        .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
                         .title("End")
                         .position(endLoc));
 
@@ -186,6 +188,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    public Bitmap resizeMapIcons(String iconName, int width, int height){
+        Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+        return resizedBitmap;
+    }
 
     @Override
     public void onDirectionFinderStart() {
@@ -238,18 +245,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
 
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.locc))
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
                     .title(route.startAddress)
                     .position(route.startLocation)));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.endlocc))
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
                     .title(route.endAddress)
                     .position(route.endLocation)));
 
             for(LatLng location : interestingPointsOnTheWay.keySet()){
-                mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin24))
-                        .position(location));
+                String val = interestingPointsOnTheWay.get(location);
+                if(val.equals("restaurant")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("menulined",100,100)))
+                            .position(location));
+                } else if(val.equals("selfie")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("eyelined",100,100)))
+                            .position(location));
+
+                } else if(val.equals("park")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("treelined",100,100)))
+                            .position(location));
+
+                } else if(val.equals("shopping")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                }
             }
 
             polylineOptions = new PolylineOptions().
