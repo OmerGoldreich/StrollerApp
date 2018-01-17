@@ -44,8 +44,6 @@ import com.stroller.stroller.navigationPackage.DirectionFinder;
 import com.stroller.stroller.navigationPackage.DirectionFinderListener;
 import com.stroller.stroller.navigationPackage.Route;
 
-import com.google.android.gms.maps.model.MapStyleOptions;
-
 import org.json.JSONException;
 
 
@@ -142,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 currentLine.setPattern(PATTERN_POLYLINE_DOTTED);
                 mMap.getUiSettings().setZoomControlsEnabled(true);
                 mMap.setMinZoomPreference(11);
-            }
+               }
             return;
         }
 

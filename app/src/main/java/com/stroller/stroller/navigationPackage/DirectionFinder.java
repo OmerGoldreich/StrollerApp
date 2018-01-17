@@ -1,6 +1,7 @@
 package com.stroller.stroller.navigationPackage;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -28,7 +29,7 @@ public class DirectionFinder {
     private String destination;
     private String whatPageBroughtMeHere;
     public static List<LatLng> decodedPolyline;
-    public static List<LatLng> startInstructPoints = new ArrayList<>();
+    public static List<LatLng> startInstructPoints;
 
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination,String faves_or_search) {
         this.listener = listener;
@@ -91,7 +92,7 @@ public class DirectionFinder {
     private void parseJSon(String data) throws JSONException {
         if(data==null)
             return;
-
+        startInstructPoints = new ArrayList<>();
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
@@ -105,12 +106,10 @@ public class DirectionFinder {
             JSONObject jsonStartingLeg = jsonLegs.getJSONObject(0);
             JSONObject jsonFinalLeg = jsonLegs.getJSONObject(jsonLegs.length()-1);
             JSONObject jsonDistance = jsonStartingLeg.getJSONObject("distance");
-            JSONObject jsonDuration = jsonStartingLeg.getJSONObject("duration");
             JSONObject jsonEndLocation = jsonFinalLeg.getJSONObject("end_location");
             JSONObject jsonStartLocation = jsonStartingLeg.getJSONObject("start_location");
 
             route.distance = new Distance(jsonDistance.getString("text"), jsonDistance.getInt("value"));
-            route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
             route.endAddress = jsonFinalLeg.getString("end_address");
             route.startAddress = jsonStartingLeg.getString("start_address");
             route.startLocation = new LatLng(jsonStartLocation.getDouble("lat"), jsonStartLocation.getDouble("lng"));
@@ -120,9 +119,21 @@ public class DirectionFinder {
 
             JSONObject jsonEndInstruct;
             LatLng endPoint;
+            int minutes = 0;
+            int hours = 0;
             //get navigation instructions
             for(int j = 0; j < jsonLegs.length(); j++){
                 JSONObject jsonLeg = jsonLegs.getJSONObject(j);
+                JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
+                String durationString = jsonDuration.getString("text");
+                Log.d("duration",durationString);
+                String[] parseDuration = durationString.split(" ");
+                if(parseDuration[1].contains("min")){
+                    minutes += Integer.parseInt(parseDuration[0]);
+                } else {
+                    hours += Integer.parseInt(parseDuration[0]);
+                    minutes += Integer.parseInt(parseDuration[2]);
+                }
                 JSONArray jsonSteps = jsonLeg.getJSONArray("steps");
                 for(int k = 0; k < jsonSteps.length(); k++){
                     JSONObject step = jsonSteps.getJSONObject(k);
@@ -136,8 +147,13 @@ public class DirectionFinder {
                     instruct = instruct.concat("\n\n");
                 }
             }
-
+            if(minutes/60 > 0){
+                hours += minutes / 60;
+                minutes = minutes % 60;
+            }
+            String duration = Integer.toString(hours).concat("h\n").concat(Integer.toString(minutes)).concat("m");
             route.instructions = instruct;
+            route.duration = new Duration(duration,1);
             route.instructionsPoints = startInstructPoints;
             routes.add(route);
         }

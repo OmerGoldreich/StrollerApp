@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,6 +79,8 @@ public class FragmentTwo extends Fragment {
         View v = inflater.inflate(R.layout.fragment_two, container, false);
 
         final ListView lstItems = v.findViewById(R.id.favesList);
+        TextView emptyText = v.findViewById(android.R.id.empty);
+        lstItems.setEmptyView(emptyText);
 
         //customized list
 

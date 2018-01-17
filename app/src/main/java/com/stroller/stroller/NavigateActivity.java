@@ -49,9 +49,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
     private static double currLocationLNG;
     private GoogleMap mMap;
     public String[] instructions;
-    public List<LatLng> endPoints;
+    public List<LatLng> instructPoints;
     public TextView box;
-    public int index = 0;
+    public int index = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
 
         instructions = instruct.split("\n\n");
 
-        endPoints = DirectionFinder.startInstructPoints;
+        instructPoints = DirectionFinder.startInstructPoints;
 
         box = findViewById(R.id.instructions);
         box.setText(instructions[0]);
@@ -152,9 +152,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
                 currLocationLAT = currLat;
                 currLocationLNG = currLng;
                 Log.d("curr location ",currLocationLAT+" "+currLocationLNG);
-                if(index < endPoints.size()) {
-                    if (Math.pow((currLat - endPoints.get(index).latitude), 2)
-                            + Math.pow((currLng - endPoints.get(index).longitude), 2) <= Math.pow(0.0007, 2)) {
+                if(index < instructPoints.size()) {
+                    if (Math.pow((currLat - instructPoints.get(index).latitude), 2)
+                            + Math.pow((currLng - instructPoints.get(index).longitude), 2) <= Math.pow(0.0007, 2)) {
                         index++;
                         box.setText(instructions[index]);
                         box.setMovementMethod(new ScrollingMovementMethod());
