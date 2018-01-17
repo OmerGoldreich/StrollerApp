@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -236,10 +237,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(route.startLocation.latitude > route.endLocation.latitude){
                 upperLat = route.startLocation.latitude + 0.01;
                 lowerLat = route.endLocation.latitude - 0.005;
+                Log.d("lower",Double.toString(lowerLat));
+                Log.d("upper",Double.toString(upperLat));
                 bounds = new LatLngBounds(new LatLng(lowerLat, route.endLocation.longitude),new LatLng(upperLat, route.startLocation.longitude));
             } else {
                 upperLat = route.endLocation.latitude + 0.01;
                 lowerLat = route.startLocation.latitude - 0.005;
+                Log.d("lower",Double.toString(lowerLat));
+                Log.d("upper",Double.toString(upperLat));
                 bounds = new LatLngBounds(new LatLng(lowerLat, route.startLocation.longitude),new LatLng(upperLat, route.endLocation.longitude));
             }
             mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));

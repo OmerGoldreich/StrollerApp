@@ -17,4 +17,5 @@ public class Route {
     public String instructions;
 
     public List<LatLng> points;
+    public List<LatLng> instructionsPoints;
 }
