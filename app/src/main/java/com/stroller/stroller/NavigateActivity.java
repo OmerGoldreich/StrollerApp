@@ -68,7 +68,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         String instruct = htmlInstruct.replaceAll("<.*?>", "");
 
         instructions = instruct.split("\n\n");
+
         endPoints = DirectionFinder.startInstructPoints;
+
         box = findViewById(R.id.instructions);
         box.setText(instructions[0]);
 
