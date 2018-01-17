@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         });
         mCallbackManager = CallbackManager.Factory.create();
         mFacebookBtn = findViewById(R.id.facebookBtn);
-        mFacebookBtn.setReadPermissions("email", "public_profile");
+        mFacebookBtn.setReadPermissions("email", "public_profile",  "user_friends"); //i added  "user_friends" on 15/1/17
         mFacebookBtn.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //method to add this new user to database
-        addUserToDB();
+    //    addUserToDB();
 
 
     }

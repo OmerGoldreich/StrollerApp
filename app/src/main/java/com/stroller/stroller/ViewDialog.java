@@ -43,7 +43,7 @@ public class ViewDialog extends Dialog implements
     private DatabaseReference myRef= mFirebaseDatabase.getReference();
     private DatabaseReference usersListRef = myRef.child("users");
     private DatabaseReference currentUserRef;
-    private String userID = "user6";
+    private String userID;
     PolylineOptions roadOnMap = MapsActivity.getLineOptions();
     private List<LatLng> decodedPolyline;
 
@@ -75,6 +75,12 @@ public class ViewDialog extends Dialog implements
         } else {
             setContentView(R.layout.change_roadname_in_faves);
         }
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        userID = user.getUid();
+
+
         add = findViewById(R.id.btn_dialog);
         add.setOnClickListener(this);
     }
@@ -118,9 +124,6 @@ public class ViewDialog extends Dialog implements
     }
 
     private void changeInputInDataBase(final String newInput,String oldInput) {
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        userID = "user6";         // should be userID = user.getUid();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");

@@ -42,8 +42,6 @@ public class FragmentTwo extends Fragment {
     public ArrayList<String> currUserFavesList = new ArrayList<String>();
 
     private int LastChangedItemPositionInList=-1;
-
-    //add Firebase Database stuff
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -157,7 +155,8 @@ public class FragmentTwo extends Fragment {
         //NOTE: Unless you are signed in, this will not be useable.
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        userID = "user6";         // should be userID = user.getUid();
+        //userID = "user6";         // should be userID = user.getUid();
+        userID = user.getUid();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");
@@ -229,7 +228,7 @@ public class FragmentTwo extends Fragment {
     }
 
     private void deleteFromDataBase(String s) {
-        currentUserRef = usersListRef.child(userID); // should be  currentUserRef = usersListRef.child(userID);
+        currentUserRef = usersListRef.child(userID);
         currentUserRef.child(s).removeValue();
     }
 }
