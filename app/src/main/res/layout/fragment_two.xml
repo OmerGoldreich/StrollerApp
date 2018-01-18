@@ -10,4 +10,15 @@
         android:layout_height="match_parent" />
 
 
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:paddingTop="5dp"
+        android:textColor="#fff"
+        android:text="You have no favorites to show" />
+
+
 </RelativeLayout>

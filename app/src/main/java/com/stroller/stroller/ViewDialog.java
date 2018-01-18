@@ -111,6 +111,7 @@ public class ViewDialog extends Dialog implements
                 else{
                     currentUserRef.child(input).child("road_name").setValue(input);
                     currentUserRef.child(input).child("road").setValue(decodedPolyline);
+                    currentUserRef.child(input).child("instruct_start_points").setValue(MapsActivity.route_instruc_strt_pnts);
                     currentUserRef.child(input).child("duration").setValue(MapsActivity.duration);
                     currentUserRef.child(input).child("instructions").setValue(MapsActivity.instructions);
                 }

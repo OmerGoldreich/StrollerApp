@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +50,7 @@ public class FragmentTwo extends Fragment {
     private DatabaseReference usersListRef;
     private DatabaseReference currentUserRef;
     public static List<LatLng> faves_polyline;
+    public static List<LatLng> faves_instruct_pnts;
     public static String duration_from_faves;
     public static String instructions_from_faves;
 
@@ -77,6 +79,8 @@ public class FragmentTwo extends Fragment {
         View v = inflater.inflate(R.layout.fragment_two, container, false);
 
         final ListView lstItems = v.findViewById(R.id.favesList);
+        TextView emptyText = v.findViewById(android.R.id.empty);
+        lstItems.setEmptyView(emptyText);
 
         //customized list
 
@@ -98,6 +102,7 @@ public class FragmentTwo extends Fragment {
                 String roadAtCurrPosition = currUserFavesList.get(i);
                 DatabaseReference currRoadRefInDB = currentUserRef.child(roadAtCurrPosition).child("road");
                 final List<LatLng> finalPolylineList = new ArrayList<>();
+                final List<LatLng> finalInstructPntsList = new ArrayList<>();
                 currRoadRefInDB.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -119,6 +124,8 @@ public class FragmentTwo extends Fragment {
                 final String[] instructions = new String[1];
                 DatabaseReference road_duration = currentUserRef.child(roadAtCurrPosition).child("duration");
                 DatabaseReference road_instructions = currentUserRef.child(roadAtCurrPosition).child("instructions");
+                DatabaseReference instruct_start_points = currentUserRef.child(roadAtCurrPosition).child("instruct_start_points");
+
                 road_duration.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -143,6 +150,24 @@ public class FragmentTwo extends Fragment {
 
                     }
                 });
+                instruct_start_points.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            //every snapshot is a point on the route
+                            double lat = snapshot.child("latitude").getValue(Double.class);
+                            double lng = snapshot.child("longitude").getValue(Double.class);
+                            LatLng point = new LatLng(lat,lng);
+                            finalInstructPntsList.add(point);
+                        }
+                        faves_instruct_pnts=finalInstructPntsList;
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+
                 Intent intent = new Intent(getActivity(),MapsActivity.class);
                 intent.putExtra("FAVES_OR_SEARCH","faves");
                 startActivity(intent);
