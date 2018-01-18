@@ -1,20 +1,20 @@
 package com.stroller.stroller.navigationPackage;
 
-import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Mai Thanh Hiep on 4/3/2016.
  */
-public class Route {
+public class Route implements Serializable{
     public Distance distance;
     public Duration duration;
     public String endAddress;
-    public LatLng endLocation;
+    public LatLon endLocation;
     public String startAddress;
-    public LatLng startLocation;
+    public LatLon startLocation;
     public String instructions;
 
-    public List<LatLng> points;
+    public List<LatLon> points;
 }
