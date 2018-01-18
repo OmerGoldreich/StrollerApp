@@ -74,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean isViewReady=false;
     public static String duration = "";
     private static List<LatLng> decodedPolylineMaps;
+    public static List<LatLng> route_instruc_strt_pnts;
     public static String instructions="";
 
 
@@ -189,6 +190,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (LatLon latLon : routes.get(0).points) {
             this.decodedPolylineMaps.add(new LatLng(latLon.latitude,latLon.longitude));
         }
+        this.route_instruc_strt_pnts=new ArrayList<>();
+        /*for (LatLon latLon : routes.get(0).instructionsPoints) {
+            this.route_instruc_strt_pnts.add(new LatLng(latLon.latitude,latLon.longitude));
+        }*/
     }
 
     private void sendRequest() {
@@ -199,6 +204,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(from_faves_or_search.equals("faves")){
             List<LatLng> points=FragmentTwo.faves_polyline;
             decodedPolylineMaps = points;
+            route_instruc_strt_pnts = FragmentTwo.faves_instruct_pnts;
             LatLng startLoc = points.get(0);
             LatLng endLoc = points.get(points.size() - 1);
             duration = duration_from_faves;

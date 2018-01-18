@@ -3,6 +3,8 @@ package com.stroller.stroller.navigationPackage;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,7 +33,7 @@ public class DirectionFinder {
     private String destination;
     private String whatPageBroughtMeHere;
     public static List<LatLon> decodedPolyline;
-
+    public static List<LatLng> startInstructPoints;
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination,String faves_or_search) {
         this.listener = listener;
         this.origin = origin;
@@ -133,7 +135,7 @@ public class DirectionFinder {
     private void parseJSon(String data) throws JSONException {
         if(data==null)
             return;
-
+        startInstructPoints = new ArrayList<>();
         List<Route> routes = new ArrayList<Route>();
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
@@ -223,7 +225,7 @@ public class DirectionFinder {
                     instruct = instruct.concat("\n\n");
                 }
             }
-
+            route.instructionsPoints=new ArrayList<>();
             route.instructions = instruct;
             routes.add(route);
         }

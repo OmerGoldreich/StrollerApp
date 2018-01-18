@@ -15,6 +15,6 @@ public class Route implements Serializable{
     public String startAddress;
     public LatLon startLocation;
     public String instructions;
-
+    public List<LatLon> instructionsPoints;
     public List<LatLon> points;
 }
