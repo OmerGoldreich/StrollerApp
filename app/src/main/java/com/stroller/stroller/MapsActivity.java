@@ -191,9 +191,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             this.decodedPolylineMaps.add(new LatLng(latLon.latitude,latLon.longitude));
         }
         this.route_instruc_strt_pnts=new ArrayList<>();
-        /*for (LatLon latLon : routes.get(0).instructionsPoints) {
+        for (LatLon latLon : routes.get(0).instructionsPoints) {
             this.route_instruc_strt_pnts.add(new LatLng(latLon.latitude,latLon.longitude));
-        }*/
+        }
     }
 
     private void sendRequest() {
