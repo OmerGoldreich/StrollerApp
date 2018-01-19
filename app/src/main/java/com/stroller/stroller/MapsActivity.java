@@ -42,9 +42,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.stroller.stroller.navigationPackage.DirectionFinder;
 import com.stroller.stroller.navigationPackage.DirectionFinderListener;
+import com.stroller.stroller.navigationPackage.Highlight;
 import com.stroller.stroller.navigationPackage.LatLon;
 import com.stroller.stroller.navigationPackage.Route;
 
@@ -64,8 +66,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static PolylineOptions polylineOptions;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
+    private List<Highlight> highlights=new ArrayList<>();
     private HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
+    public Map<String,String> descDict = new HashMap<String, String>();
+    public Map<String,Integer> imgDict = new HashMap<String,Integer>();
     String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
     Integer[] imgIds={R.drawable.eyeheart,R.drawable.menucafe,R.drawable.tree2,R.drawable.bagshop};
     public String instruct = "";
@@ -82,6 +87,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        Intent intent = this.getIntent();
+        for (int i=0;i<intent.getIntExtra("highlightsSize",1);i++){
+            highlights.add((Highlight) intent.getSerializableExtra("highlights"+i));
+        }
+        updateDictionaries();
         fixImagesTexts();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -99,12 +109,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
     }
+    private void updateDictionaries(){
+        descDict.put("sightseeing","Prepare your duck face! {name} is on your way");
+        descDict.put("food","Encounter some delicacies on {name}");
+        descDict.put("parks","{name} is one of the most beloved spots in town");
+        descDict.put("shops","Shop till you drop at {name}");
+        descDict.put("attractions","Prepare your duck face! {name} is on your way");
+        descDict.put("cafes","Prepare your duck face! {name} is on your way");
+        descDict.put("culturalactivities","Prepare your duck face! {name} is on your way");
+        descDict.put("foodshops","Prepare your duck face! {name} is on your way");
+        descDict.put("nightlife","Prepare your duck face! {name} is on your way");
+        imgDict.put("sightseeing",R.drawable.eyeheart);
+        imgDict.put("food",R.drawable.menucafe);
+        imgDict.put("parks",R.drawable.tree2);
+        imgDict.put("shops",R.drawable.bagshop);
+        imgDict.put("attractions",R.drawable.bagshop);
+        imgDict.put("cafes",R.drawable.bagshop);
+        imgDict.put("culturalactivities",R.drawable.bagshop);
+        imgDict.put("foodshops",R.drawable.bagshop);
+        imgDict.put("nightlife",R.drawable.bagshop);
+    }
     private void fixImagesTexts(){
         ImageView[] imageViews={findViewById(R.id.imageView1),findViewById(R.id.imageView2),findViewById(R.id.imageView3),findViewById(R.id.imageView4)};
         TextView[] textViews={findViewById(R.id.textView1),findViewById(R.id.textView2),findViewById(R.id.textView3),findViewById(R.id.textView4)};
-        for(int i=0;i<4;i++){
-            imageViews[i].setImageResource(imgIds[i]);
-            textViews[i].setText(descriptions[i]);
+        for(int i=0;i<highlights.size();i++){
+            imageViews[i].setImageResource(imgDict.get(highlights.get(i).category));
+            String currentText=descDict.get(highlights.get(i).category);
+            currentText=currentText.replace("{name}",highlights.get(i).name);
+            textViews[i].setText(currentText);
         }
     }
     public void drawRouteOnMap(List<Route> routes) {
@@ -113,10 +145,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         destinationMarkers = new ArrayList<>();
 
         for (Route route : routes) {
-            Log.i("MapsActivity","Route start Location:"+route.startLocation.latitude+","+route.startLocation.longitude);
-            Log.i("MapsActivity","Route end Location:"+route.endLocation.latitude+","+route.endLocation.longitude);
-            Log.i("MapsActivity","Route start address:"+route.startAddress);
-            Log.i("MapsActivity","Route size points:"+route.points.size());
             if(route.duration.value > 10800){
                 CustomDialog dialog = new CustomDialog(MapsActivity.this, 1);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -149,21 +177,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             for(LatLng location : interestingPointsOnTheWay.keySet()){
                 String val = interestingPointsOnTheWay.get(location);
-                if(val.equals("restaurant")){
+                if(val.equals("food")){
                     mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("menulined",100,100)))
                             .position(location));
-                } else if(val.equals("selfie")){
+                } else if(val.equals("sightseeing")){
                     mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("eyelined",100,100)))
                             .position(location));
 
-                } else if(val.equals("park")){
+                } else if(val.equals("parks")){
                     mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("treelined",100,100)))
                             .position(location));
 
-                } else if(val.equals("shopping")){
+                } else if(val.equals("shops")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                } else if(val.equals("attractions")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                }  else if(val.equals("cafes")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                }  else if(val.equals("culturalactivities")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                }  else if(val.equals("foodshops")){
+                    mMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .position(location));
+
+                }  else if(val.equals("nightlife")){
                     mMap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
                             .position(location));
@@ -191,9 +244,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             this.decodedPolylineMaps.add(new LatLng(latLon.latitude,latLon.longitude));
         }
         this.route_instruc_strt_pnts=new ArrayList<>();
-        /*for (LatLon latLon : routes.get(0).instructionsPoints) {
+        for (LatLon latLon : routes.get(0).instructionsPoints) {
             this.route_instruc_strt_pnts.add(new LatLng(latLon.latitude,latLon.longitude));
-        }*/
+        }
     }
 
     private void sendRequest() {
@@ -244,10 +297,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for (int i=0;i<intent.getIntExtra("routesListSize",1);i++){
             routeList.add((Route)intent.getSerializableExtra("routesList"+i));
         }
-        interestingPointsOnTheWay.put(new LatLng(48.857514, 2.358788),"restaurant");
-        interestingPointsOnTheWay.put(new LatLng(48.852329, 2.347787),"park");
-        interestingPointsOnTheWay.put(new LatLng(48.853054, 2.349910),"selfie");
-        interestingPointsOnTheWay.put(new LatLng(48.859611, 2.359974),"shopping");
+        for (Highlight highlight : highlights){
+            interestingPointsOnTheWay.put(new LatLng(highlight.latitude, highlight.longitude),highlight.category);
+        }
         drawRouteOnMap(routeList);
 
 

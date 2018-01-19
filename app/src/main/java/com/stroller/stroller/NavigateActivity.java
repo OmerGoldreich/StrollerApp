@@ -69,7 +69,7 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
 
         instructions = instruct.split("\n\n");
 
-        instructPoints = DirectionFinder.startInstructPoints;
+        instructPoints = MapsActivity.route_instruc_strt_pnts;
 
         box = findViewById(R.id.instructions);
         box.setText(instructions[0]);
@@ -84,13 +84,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         });
 
         String duration = MapsActivity.duration;
-        duration = duration.replaceAll(" ", "");
-        duration = duration.replaceAll("mins", "m");
-        duration = duration.replaceAll("hours", "h\n");
-        duration = duration.replaceAll("hour", "h\n");
-        if (duration.indexOf("h") == -1) {
-            duration = "0h\n".concat(duration);
-        }
 
         TextView display = findViewById(R.id.time);
         display.setText(duration);
