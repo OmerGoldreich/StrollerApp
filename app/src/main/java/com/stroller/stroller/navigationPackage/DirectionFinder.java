@@ -37,6 +37,7 @@ public class DirectionFinder {
     public DirectionFinder(DirectionFinderListener listener, String origin, String destination,String faves_or_search) {
         this.listener = listener;
         this.origin = origin;
+        
         this.destination = destination;
         this.whatPageBroughtMeHere = faves_or_search;
     }
