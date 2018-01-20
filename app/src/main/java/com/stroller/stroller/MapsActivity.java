@@ -203,11 +203,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng originLoc = new LatLng(newLat,newLon);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc,getZoomLevel(getDistanceFromLatLonInMeters(newLat,newLon,route.startLocation.latitude,route.startLocation.longitude))));
             originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("start",80,80)))
                     .title(route.startAddress)
                     .position(new LatLng(route.startLocation.latitude,route.startLocation.longitude))));
             destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("finish",80,80)))
                     .title(route.endAddress)
                     .position(new LatLng(route.endLocation.latitude,route.endLocation.longitude))));
 
@@ -234,27 +234,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 } else if(val.equals("attractions")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("tentlined",100,100)))
                             .position(location));
 
                 }  else if(val.equals("cafes")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("coffeelined",100,100)))
                             .position(location));
 
                 }  else if(val.equals("culturalactivities")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("theatrelined",100,100)))
                             .position(location));
 
                 }  else if(val.equals("foodshops")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("grocerieslined",100,100)))
                             .position(location));
 
                 }  else if(val.equals("nightlife")){
                     mMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("baglined",100,100)))
+                            .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("discolined",100,100)))
                             .position(location));
 
                 }
