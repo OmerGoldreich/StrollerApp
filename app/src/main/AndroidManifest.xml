@@ -82,7 +82,9 @@
             android:label="@string/title_activity_navigate"
             android:screenOrientation="portrait" />
         <activity android:name=".LoadingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:noHistory="true">
+        </activity>
     </application>
 
 </manifest>

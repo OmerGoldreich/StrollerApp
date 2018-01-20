@@ -24,9 +24,9 @@ import java.util.List;
 
 
 public class DirectionFinder {
-    private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json??optimize=true&mode=walking&";
-    private static final String GOOGLE_API_KEY = "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"; //this is stroller's
-    private static String calcRouteLink="http://awitoomer123.pythonanywhere.com/calcRoute/?fromLat={0}&fromLon={1}&toLat={2}&toLon={3}";
+    //private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json??optimize=true&mode=walking&";
+    //private static final String GOOGLE_API_KEY = "AIzaSyDzAnCQaKoBFcu0L7w-OmQCdBWUx51DJKQ"; //this is stroller's
+    private String calcRouteLink="http://awitoomer123.pythonanywhere.com/calcRoute/?fromLat={0}&fromLon={1}&toLat={2}&toLon={3}";
     private static Route json;
     private DirectionFinderListener listener;
     private String origin;

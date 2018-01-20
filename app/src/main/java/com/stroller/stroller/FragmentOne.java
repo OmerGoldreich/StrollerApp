@@ -95,6 +95,7 @@ public class FragmentOne extends Fragment {
                 intent.putExtra("origin",origin);
                 intent.putExtra("dest",dest);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         return v;

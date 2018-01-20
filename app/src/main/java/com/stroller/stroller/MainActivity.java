@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             intent.putExtra("firstName",this.userFirstName);
             startActivity(intent);
-            finish();
+            //finish();
         }
     }
 

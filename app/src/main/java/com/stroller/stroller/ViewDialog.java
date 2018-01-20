@@ -22,8 +22,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.stroller.stroller.navigationPackage.DirectionFinder;
+import com.stroller.stroller.navigationPackage.Highlight;
 import com.stroller.stroller.navigationPackage.Route;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -114,6 +117,26 @@ public class ViewDialog extends Dialog implements
                     currentUserRef.child(input).child("instruct_start_points").setValue(MapsActivity.route_instruc_strt_pnts);
                     currentUserRef.child(input).child("duration").setValue(MapsActivity.duration);
                     currentUserRef.child(input).child("instructions").setValue(MapsActivity.instructions);
+
+                    //HashMap<LatLng,String> hashmap=MapsActivity.interestingPointsOnTheWay;
+                    List<Highlight> highlights = MapsActivity.highlights;
+                    List<LatLng> highlights_pnts=new ArrayList<>();
+                    List<String> highlights_category=new ArrayList<>();
+                    List<String> highlights_name=new ArrayList<>();
+
+/*                    for(LatLng pt:hashmap.keySet()){
+                        highlights_pnts.add(pt);
+                        highlights_category.add(hashmap.get(pt));
+                    }*/
+                    for(Highlight highlight:highlights){
+                        highlights_pnts.add(new LatLng(highlight.latitude,highlight.longitude));
+                        highlights_category.add(highlight.category);
+                        highlights_name.add(highlight.name);
+                    }
+                    currentUserRef.child(input).child("highlights_points").setValue(highlights_pnts);
+                    currentUserRef.child(input).child("highlights_category").setValue(highlights_category);
+                    currentUserRef.child(input).child("highlights_name").setValue(highlights_name);
+
                 }
             }
 

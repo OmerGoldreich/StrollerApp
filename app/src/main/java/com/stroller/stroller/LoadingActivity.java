@@ -50,6 +50,7 @@ public class LoadingActivity extends AppCompatActivity implements DirectionFinde
         else{
             String origin = getIntent().getStringExtra("origin");
             String destination = getIntent().getStringExtra("dest");
+            Log.i("LoadingActivity","origin:"+origin+" dest:"+destination);
             try {
                 new DirectionFinder(this, origin, destination,favesOrSearch).execute();
             } catch (UnsupportedEncodingException e) {
