@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.stroller.stroller.NavigateActivity"
+    android:layoutDirection="ltr"
     android:orientation="vertical"
     android:background="@drawable/blurprg2">
 
