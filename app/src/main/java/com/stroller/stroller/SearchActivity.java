@@ -17,9 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 
 
 import com.stroller.stroller.FragmentTwo;
@@ -50,13 +47,13 @@ public class SearchActivity extends AppCompatActivity {
             }
             TextView username = (TextView)findViewById(R.id.txt);
             username.setText("Hello, "+firstName);
-            ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
+            /*ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
             String personPhotoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
             Glide.with(getApplicationContext()).load(personPhotoUrl)
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfilePic);
+                    .into(imgProfilePic);*/
         }
     }
 
