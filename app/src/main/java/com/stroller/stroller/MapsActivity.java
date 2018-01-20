@@ -46,6 +46,8 @@ import java.util.Map;
 
 import com.stroller.stroller.navigationPackage.DirectionFinder;
 import com.stroller.stroller.navigationPackage.DirectionFinderListener;
+import com.stroller.stroller.navigationPackage.Distance;
+import com.stroller.stroller.navigationPackage.Duration;
 import com.stroller.stroller.navigationPackage.Highlight;
 import com.stroller.stroller.navigationPackage.LatLon;
 import com.stroller.stroller.navigationPackage.Route;
@@ -66,8 +68,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static PolylineOptions polylineOptions;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
-    private List<Highlight> highlights=new ArrayList<>();
-    private HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
+    public static List<Highlight> highlights=new ArrayList<>();
+    private static HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     public Map<String,String> descDict = new HashMap<String, String>();
     public Map<String,Integer> imgDict = new HashMap<String,Integer>();
@@ -81,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static List<LatLng> decodedPolylineMaps;
     public static List<LatLng> route_instruc_strt_pnts;
     public static String instructions="";
+    private String from_faves_or_search;
 
 
     @Override
@@ -88,11 +91,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Intent intent = this.getIntent();
+        highlights=new ArrayList<>();
         for (int i=0;i<intent.getIntExtra("highlightsSize",1);i++){
             highlights.add((Highlight) intent.getSerializableExtra("highlights"+i));
         }
         updateDictionaries();
-        fixImagesTexts();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -250,11 +253,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void sendRequest() {
-        String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
+        from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
+        ArrayList<Route> routeList=new ArrayList<>();
         String duration_from_faves = FragmentTwo.duration_from_faves;
         String instructions_from_faves = FragmentTwo.instructions_from_faves;
+        List<String> highlights_categories = FragmentTwo.route_highlights_category;
+        List<String> highlights_names = FragmentTwo.route_highlights_name;
+        List<LatLng> highlights_points = FragmentTwo.route_highlights_pnts;
 
         if(from_faves_or_search.equals("faves")){
+
+            highlights=new ArrayList<>();
             List<LatLng> points=FragmentTwo.faves_polyline;
             decodedPolylineMaps = points;
             route_instruc_strt_pnts = FragmentTwo.faves_instruct_pnts;
@@ -263,37 +272,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             duration = duration_from_faves;
             instruct = instructions_from_faves;
 
-            if(mMap!=null){
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 14));
-
-                mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
-                        .title("Start")
-                        .position(startLoc));
-
-                mMap.addMarker(new MarkerOptions()
-                        .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
-                        .title("End")
-                        .position(endLoc));
-
-
-                polylineOptions = new PolylineOptions().
-                        geodesic(true).
-                        color(Color.parseColor("#FF8765")).
-                        width(15);
-                for(LatLng point:points){
-                    polylineOptions.add(point);
-                }
-                Polyline currentLine = mMap.addPolyline(polylineOptions);
-                currentLine.setPattern(PATTERN_POLYLINE_DOTTED);
-                mMap.getUiSettings().setZoomControlsEnabled(true);
-                mMap.setMinZoomPreference(11);
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NEW 19/1 BY TALA !!!!!!!!!!!!!!
+            Route route_from_faves = new Route();
+            route_from_faves.points=new ArrayList<>();
+            route_from_faves.instructionsPoints=new ArrayList<>();
+            for(LatLng pt:points){
+                route_from_faves.points.add(new LatLon(pt.latitude,pt.longitude));
             }
+            for(LatLng pt:route_instruc_strt_pnts){
+                route_from_faves.instructionsPoints.add(new LatLon(pt.latitude,pt.longitude));
+            }
+            route_from_faves.instructions = instructions_from_faves;
+            route_from_faves.startLocation = new LatLon(startLoc.latitude,startLoc.longitude);
+            route_from_faves.endLocation = new LatLon(endLoc.latitude,endLoc.longitude);
+            route_from_faves.duration =  new Duration(duration_from_faves,20);/////CHANGE TO REAL VALUE AFTER INSERTING TO DB TALA
+            route_from_faves.startAddress="favesStartAddress";
+            route_from_faves.endAddress="favesEndAddress";
+            route_from_faves.distance = new Distance("",16);///these are random values -temporary
+            //highlights = FragmentTwo.route_highlights; shows null
+            for(int j=0;j<highlights_categories.size();j++){
+                LatLng point = highlights_points.get(j);
+                String category = highlights_categories.get(j);
+                String name = highlights_names.get(j);
+                Highlight h=new Highlight(point.latitude,point.longitude,category,name);
+                highlights.add(h);
+            }
+            fixImagesTexts(); //called from here only if clicked on favorites item
+            routeList.add(route_from_faves);
+            for (Highlight highlight : highlights){
+                interestingPointsOnTheWay.put(new LatLng(highlight.latitude, highlight.longitude),highlight.category);
+            }
+            drawRouteOnMap(routeList);
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END OF NEW 19/1 BY TALA !!!!!!!!!!!!!!
             return;
         }
+
+        fixImagesTexts();//called from here only if normal search
         Intent intent = this.getIntent();
-        ArrayList<Route> routeList=new ArrayList<>();
         for (int i=0;i<intent.getIntExtra("routesListSize",1);i++){
             routeList.add((Route)intent.getSerializableExtra("routesList"+i));
         }
@@ -301,8 +316,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             interestingPointsOnTheWay.put(new LatLng(highlight.latitude, highlight.longitude),highlight.category);
         }
         drawRouteOnMap(routeList);
-
-
     }
 
     @Override
