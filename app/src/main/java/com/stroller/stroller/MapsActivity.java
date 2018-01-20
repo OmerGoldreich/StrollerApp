@@ -69,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static PolylineOptions polylineOptions;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
-    public static List<Highlight> highlights=new ArrayList<>();
+    public  static List<Highlight> highlights=new ArrayList<>();
     private static HashMap<LatLng,String> interestingPointsOnTheWay = new HashMap<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
     public Map<String,String> descDict = new HashMap<String, String>();
@@ -93,11 +93,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         Intent intent = this.getIntent();
         highlights=new ArrayList<>();
+        interestingPointsOnTheWay = new HashMap<>();
         for (int i=0;i<intent.getIntExtra("highlightsSize",1);i++){
             highlights.add((Highlight) intent.getSerializableExtra("highlights"+i));
         }
         updateDictionaries();
-        fixImagesTexts();
+        String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
+        if (!from_faves_or_search.equals("faves")) {
+            fixImagesTexts();
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -305,7 +309,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Highlight h=new Highlight(point.latitude,point.longitude,category,name);
                 highlights.add(h);
             }
-            //fixImagesTexts(); //called from here only if clicked on favorites item
+            fixImagesTexts(); //called from here only if clicked on favorites item
             routeList.add(route_from_faves);
             for (Highlight highlight : highlights){
                 interestingPointsOnTheWay.put(new LatLng(highlight.latitude, highlight.longitude),highlight.category);
@@ -314,6 +318,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! END OF NEW 19/1 BY TALA !!!!!!!!!!!!!!
             return;
         }
+        //fixImagesTexts();
         Intent intent = this.getIntent();
         for (int i=0;i<intent.getIntExtra("routesListSize",1);i++){
             routeList.add((Route)intent.getSerializableExtra("routesList"+i));
@@ -345,12 +350,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.setMyLocationEnabled(true);
         isMapReady=true;
         if(isMapReady&&isViewReady) {
-            new Handler().postDelayed(new Runnable() {
+            /* Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     sendRequest();
                 }
-            }, 500);
+            }, 50);*/
+            sendRequest();
         }
 
         final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
@@ -371,12 +377,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         isViewReady=true;
         if(isMapReady&&isViewReady) {
-            new Handler().postDelayed(new Runnable() {
+            /*new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     sendRequest();
                 }
-            }, 500);
+            }, 50);*/
+            sendRequest();
         }
 
     }
