@@ -154,6 +154,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
     }
+    private int getZoomLevel(double radius) {
+        double scale = radius / 500;
+        int zoomLevel =(int) (16 - Math.log(scale) / Math.log(2));
+        return zoomLevel-1;
+    }
+    private double toRad(double Value) {
+        // Converts numeric degrees to radians
+        return Value * Math.PI / 180;
+    }
+    private double getDistanceFromLatLonInMeters(double lat1,double lon1,double lat2,double lon2) {
+        double R = 6371;//Radius of the earth in km
+        double dLat = toRad(lat2 - lat1);
+        double dLon = toRad(lon2 - lon1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c; //Distance in km
+        return d * 1000;
+    }
     public void drawRouteOnMap(List<Route> routes) {
         polylinePaths = new ArrayList<>();
         originMarkers = new ArrayList<>();
@@ -169,7 +187,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             double upperLat;
             double lowerLat;
-            LatLngBounds bounds;
+            /*LatLngBounds bounds;
             if(route.startLocation.latitude > route.endLocation.latitude){
                 upperLat = route.startLocation.latitude + 0.01;
                 lowerLat = route.endLocation.latitude - 0.005;
@@ -179,8 +197,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 lowerLat = route.startLocation.latitude - 0.005;
                 bounds = new LatLngBounds(new LatLng(lowerLat, route.startLocation.longitude),new LatLng(upperLat, route.endLocation.longitude));
             }
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
-
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));*/
+            double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
+            double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
+            LatLng originLoc = new LatLng(newLat,newLon);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(originLoc,getZoomLevel(getDistanceFromLatLonInMeters(newLat,newLon,route.startLocation.latitude,route.startLocation.longitude))));
             originMarkers.add(mMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
                     .title(route.startAddress)
