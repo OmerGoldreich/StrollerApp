@@ -106,12 +106,12 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 20));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place1",80,80)))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("start",80,80)))
                 .title("Start")
                 .position(startLoc));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("place2",80,80)))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("finish",80,80)))
                 .title("End")
                 .position(endLoc));
 
