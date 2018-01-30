@@ -42,12 +42,11 @@ import java.util.ListIterator;
 
 public class FragmentTwo extends Fragment {
 
-    public ArrayList<String> currUserFavesList = new ArrayList<String>();
+    public static ArrayList<String> currUserFavesList = new ArrayList<String>();
 
     private int LastChangedItemPositionInList=-1;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     private DatabaseReference usersListRef;
     private DatabaseReference currentUserRef;
@@ -244,12 +243,11 @@ public class FragmentTwo extends Fragment {
         //NOTE: Unless you are signed in, this will not be useable.
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        //userID = "user6";         // should be userID = user.getUid();
         userID = user.getUid();
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");
-        currentUserRef = usersListRef.child(userID); // should be         currentUserRef = usersListRef.child(userID);
+        currentUserRef = usersListRef.child(userID);
         currentUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

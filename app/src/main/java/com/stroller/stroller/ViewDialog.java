@@ -3,30 +3,25 @@ package com.stroller.stroller;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.stroller.stroller.navigationPackage.DirectionFinder;
 import com.stroller.stroller.navigationPackage.Highlight;
-import com.stroller.stroller.navigationPackage.Route;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -47,13 +42,14 @@ public class ViewDialog extends Dialog implements
     private DatabaseReference usersListRef = myRef.child("users");
     private DatabaseReference currentUserRef;
     private String userID;
-    PolylineOptions roadOnMap = MapsActivity.getLineOptions();
     private List<LatLng> decodedPolyline;
 
     private String old_road_name = "";
     private int caller_id;
+    private ArrayList<String> faves_list;
 
-
+    private TextView name_evaluation = null;
+    private EditText roadGivenName=null;
     public ViewDialog(Activity actv, String itemValueStr, int id) {
         super(actv);
         // TODO Auto-generated constructor stub
@@ -82,15 +78,37 @@ public class ViewDialog extends Dialog implements
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         userID = user.getUid();
-
-
         add = findViewById(R.id.btn_dialog);
         add.setOnClickListener(this);
+        faves_list = FragmentTwo.currUserFavesList;
+
+        name_evaluation = (TextView) findViewById(R.id.nameReport);
+        roadGivenName = findViewById(R.id.road_name);
+        roadGivenName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                 }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(checkIfInputExists(String.valueOf(s))){
+                    name_evaluation.setText("name already exists");
+                    add.setEnabled(false);
+                }
+                else {
+                    name_evaluation.setText("");
+                    add.setEnabled(true);
+                }
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-        EditText roadGivenName = findViewById(R.id.road_name);
         final String roadname = roadGivenName.getText().toString();
         if(!roadname.equals("")){
             if(caller_id == 0){
@@ -103,12 +121,22 @@ public class ViewDialog extends Dialog implements
         }
     }
 
-    private void addinputToDataBase(final String input) {
-        currentUserRef = usersListRef.child(userID); // should be  currentUserRef = usersListRef.child(userID);
 
+    private boolean checkIfInputExists(String input) {
+        for(String entry:faves_list){
+            if(entry.equals(input)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void addinputToDataBase(final String input) {
+        currentUserRef = usersListRef.child(userID);
         currentUserRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 if(dataSnapshot.hasChild(input)){
                 }
                 else{
@@ -118,16 +146,11 @@ public class ViewDialog extends Dialog implements
                     currentUserRef.child(input).child("duration").setValue(MapsActivity.duration);
                     currentUserRef.child(input).child("instructions").setValue(MapsActivity.instructions);
 
-                    //HashMap<LatLng,String> hashmap=MapsActivity.interestingPointsOnTheWay;
                     List<Highlight> highlights = MapsActivity.highlights;
                     List<LatLng> highlights_pnts=new ArrayList<>();
                     List<String> highlights_category=new ArrayList<>();
                     List<String> highlights_name=new ArrayList<>();
 
-/*                    for(LatLng pt:hashmap.keySet()){
-                        highlights_pnts.add(pt);
-                        highlights_category.add(hashmap.get(pt));
-                    }*/
                     for(Highlight highlight:highlights){
                         highlights_pnts.add(new LatLng(highlight.latitude,highlight.longitude));
                         highlights_category.add(highlight.category);
@@ -136,7 +159,6 @@ public class ViewDialog extends Dialog implements
                     currentUserRef.child(input).child("highlights_points").setValue(highlights_pnts);
                     currentUserRef.child(input).child("highlights_category").setValue(highlights_category);
                     currentUserRef.child(input).child("highlights_name").setValue(highlights_name);
-
                 }
             }
 
@@ -151,7 +173,7 @@ public class ViewDialog extends Dialog implements
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         usersListRef = myRef.child("users");
-        currentUserRef = usersListRef.child(userID); // should be         currentUserRef = usersListRef.child(userID);
+        currentUserRef = usersListRef.child(userID);
 
         final DatabaseReference newRoadNode = currentUserRef.child(newInput);
         final DatabaseReference oldRoadNode = currentUserRef.child(oldInput);
