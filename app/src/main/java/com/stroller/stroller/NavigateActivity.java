@@ -33,7 +33,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.stroller.stroller.navigationPackage.DirectionFinder;
 
 import java.util.Arrays;
 import java.util.List;
@@ -89,10 +88,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         display.setText(duration);
     }
 
-    public Bitmap resizeMapIcons(String iconName, int width, int height){
+    public Bitmap resizeMapIcons(String iconName){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
+        return Bitmap.createScaledBitmap(imageBitmap, 80, 80, false);
     }
 
     @Override
@@ -106,12 +104,12 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLoc, 20));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("start",80,80)))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("start")))
                 .title("Start")
                 .position(startLoc));
 
         mMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("finish",80,80)))
+                .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons("finish")))
                 .title("End")
                 .position(endLoc));
 
@@ -195,7 +193,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
                     enableMyLocationIfPermitted();
                 } else {
                 }
-                return;
             }
 
         }

@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -26,23 +23,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.stroller.stroller.navigationPackage.Highlight;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 
 public class FragmentTwo extends Fragment {
 
-    public static ArrayList<String> currUserFavesList = new ArrayList<String>();
+    public static ArrayList<String> currUserFavesList = new ArrayList<>();
 
     private int LastChangedItemPositionInList=-1;
     private FirebaseDatabase mFirebaseDatabase;
@@ -89,7 +79,7 @@ public class FragmentTwo extends Fragment {
         lstItems.setEmptyView(emptyText);
 
         //customized list
-
+        currUserFavesList = new ArrayList<>();
         final CustomAdapter mCustomAdapter = new CustomAdapter(this, currUserFavesList);
         lstItems.setAdapter(mCustomAdapter);
 
@@ -143,7 +133,7 @@ public class FragmentTwo extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         duration[0] = dataSnapshot.getValue(String.class);
-                        duration_from_faves = duration[0].toString();
+                        duration_from_faves = duration[0];
                     }
 
                     @Override

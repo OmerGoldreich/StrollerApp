@@ -53,6 +53,8 @@
                 android:fontFamily="sans-serif-condensed"
                 android:maxLines="100"
                 android:paddingLeft="5dp"
+                android:paddingStart="5dp"
+                android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:scrollbars="vertical"
                 android:textColor="#585252"
@@ -78,6 +80,7 @@
             android:scaleType="fitCenter" />
 
         <ImageButton
+            android:contentDescription="@string/icon"
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="50dp"

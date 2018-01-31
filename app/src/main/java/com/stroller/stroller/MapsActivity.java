@@ -1,8 +1,6 @@
 package com.stroller.stroller;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -30,33 +27,23 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Dot;
 import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.stroller.stroller.navigationPackage.DirectionFinder;
-import com.stroller.stroller.navigationPackage.DirectionFinderListener;
 import com.stroller.stroller.navigationPackage.Distance;
 import com.stroller.stroller.navigationPackage.Duration;
 import com.stroller.stroller.navigationPackage.Highlight;
 import com.stroller.stroller.navigationPackage.LatLon;
 import com.stroller.stroller.navigationPackage.Route;
-
-import com.google.android.gms.maps.model.MapStyleOptions;
-
-import org.json.JSONException;
-
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,ViewTreeObserver.OnGlobalLayoutListener {
     private static final PatternItem DOT = new Dot();
@@ -74,8 +61,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private List<Polyline> polylinePaths = new ArrayList<>();
     public Map<String,String> descDict = new HashMap<String, String>();
     public Map<String,Integer> imgDict = new HashMap<String,Integer>();
-    String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
-    Integer[] imgIds={R.drawable.eyeheart,R.drawable.menucafe,R.drawable.tree2,R.drawable.bagshop};
+    /*String[] descriptions={"Prepare your duck face! Cathédrale Notre-Dame is on your way","Encounter some delicacies on Rue des Rosiers","Square René Viviani is one of the most beloved spots in town","Shop till you drop at Rue Vieille du Temple"};
+    Integer[] imgIds={R.drawable.eyeheart,R.drawable.menucafe,R.drawable.tree2,R.drawable.bagshop};*/
     public String instruct = "";
     private View mapView;
     private boolean isMapReady=false;
@@ -185,9 +172,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return;
             }
 
-            double upperLat;
+            /*double upperLat;
             double lowerLat;
-            /*LatLngBounds bounds;
+            LatLngBounds bounds;
             if(route.startLocation.latitude > route.endLocation.latitude){
                 upperLat = route.startLocation.latitude + 0.01;
                 lowerLat = route.endLocation.latitude - 0.005;
@@ -275,13 +262,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             instructions=instruct;
             duration = route.duration.text;
         }
-        this.decodedPolylineMaps=new ArrayList<>();
+        decodedPolylineMaps=new ArrayList<>();
         for (LatLon latLon : routes.get(0).points) {
-            this.decodedPolylineMaps.add(new LatLng(latLon.latitude,latLon.longitude));
+            decodedPolylineMaps.add(new LatLng(latLon.latitude,latLon.longitude));
         }
-        this.route_instruc_strt_pnts=new ArrayList<>();
+        route_instruc_strt_pnts=new ArrayList<>();
         for (LatLon latLon : routes.get(0).instructionsPoints) {
-            this.route_instruc_strt_pnts.add(new LatLng(latLon.latitude,latLon.longitude));
+            route_instruc_strt_pnts.add(new LatLng(latLon.latitude,latLon.longitude));
         }
     }
 
@@ -410,8 +397,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     public Bitmap resizeMapIcons(String iconName, int width, int height){
         Bitmap imageBitmap = BitmapFactory.decodeResource(getResources(),getResources().getIdentifier(iconName, "drawable", getPackageName()));
-        Bitmap resizedBitmap = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
-        return resizedBitmap;
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 /*
     @Override

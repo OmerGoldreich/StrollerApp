@@ -24,9 +24,6 @@ import com.stroller.stroller.navigationPackage.Highlight;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by tala on 20-Dec-17.
- */
 
 public class ViewDialog extends Dialog implements
         android.view.View.OnClickListener {
@@ -50,14 +47,14 @@ public class ViewDialog extends Dialog implements
 
     private TextView name_evaluation = null;
     private EditText roadGivenName=null;
-    public ViewDialog(Activity actv, String itemValueStr, int id) {
+    ViewDialog(Activity actv, String itemValueStr, int id) {
         super(actv);
         // TODO Auto-generated constructor stub
         this.activity = actv;
         this.caller_id = id;
         this.old_road_name = itemValueStr;
     }
-    public ViewDialog(Activity actv, String itemValueStr, int id, List<LatLng> decodedPolyline){
+    ViewDialog(Activity actv, String itemValueStr, int id, List<LatLng> decodedPolyline){
         super(actv);
         this.activity = actv;
         this.caller_id = id;
@@ -82,7 +79,7 @@ public class ViewDialog extends Dialog implements
         add.setOnClickListener(this);
         faves_list = FragmentTwo.currUserFavesList;
 
-        name_evaluation = (TextView) findViewById(R.id.nameReport);
+        name_evaluation = findViewById(R.id.nameReport);
         roadGivenName = findViewById(R.id.road_name);
         roadGivenName.addTextChangedListener(new TextWatcher() {
             @Override

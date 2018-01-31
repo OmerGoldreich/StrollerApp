@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:paddingTop="10dp"
-        android:paddingLeft="10dp">
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingRight="10dp">
 
         <ImageView
             android:id="@+id/heart"
@@ -20,7 +22,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:contentDescription="heart"
+            android:contentDescription="@string/icon"
             android:src="@drawable/like"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +84,7 @@
         <TextView
             android:id="@+id/nameReport"
             android:textColor="#FF0000"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="" />
@@ -102,6 +104,7 @@
             android:layout_height="30dp"
             android:background="@android:color/transparent"
             android:clickable="true"
+            android:focusable="true"
             android:text="@string/update"
             android:textColor="#FF8765"
             android:textStyle="bold" />

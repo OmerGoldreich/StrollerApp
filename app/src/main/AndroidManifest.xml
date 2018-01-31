@@ -64,8 +64,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:screenOrientation="portrait"
-            android:noHistory="true"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".StartActivity"
             android:screenOrientation="portrait" >

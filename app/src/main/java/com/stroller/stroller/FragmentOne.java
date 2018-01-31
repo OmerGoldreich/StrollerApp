@@ -1,7 +1,5 @@
 package com.stroller.stroller;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -31,7 +29,6 @@ public class FragmentOne extends Fragment {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
     int PLACE_PICKER_REQUEST = 1;
     int PLACE_PICKER_REQUEST2 = 2;
-    AlertDialog dialog;
     String origin = "";
     String dest = "";
     Double lat;
@@ -109,7 +106,7 @@ public class FragmentOne extends Fragment {
                 EditText txt = getView().findViewById(R.id.editText4);
                 CharSequence primaryAddress = place.getName();
                 if(isdigit(primaryAddress.charAt(0)))txt.setText(place.getAddress());
-                else{txt.setText(primaryAddress + ", " + place.getAddress());}
+                else{txt.setText(String.format("%s, %s", primaryAddress, place.getAddress()));}
                 LatLng originll = place.getLatLng();
                 lat = originll.latitude;
                 lng = originll.longitude;
@@ -126,7 +123,7 @@ public class FragmentOne extends Fragment {
                 EditText txt2 = getView().findViewById(R.id.editText3);
                 CharSequence primaryAddress = place.getName();
                 if(isdigit(primaryAddress.charAt(0)))txt2.setText(place.getAddress());
-                else{txt2.setText(primaryAddress + ", " + place.getAddress());}
+                else{txt2.setText(String.format("%s, %s", primaryAddress, place.getAddress()));}
                 LatLng destll = place.getLatLng();
                 lat = destll.latitude;
                 lng = destll.longitude;
@@ -141,13 +138,6 @@ public class FragmentOne extends Fragment {
     }
 
     private boolean isdigit(char c) {
-        if(c>=48 && c<=57)return true;
-        return false;
-    }
-
-    private void closeDialog(){
-        if(dialog != null){
-            dialog.dismiss();
-        }
+        return c >= 48 && c <= 57;
     }
 }

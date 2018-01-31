@@ -31,6 +31,12 @@
     <string name="wait">Please Wait</string>
     <string name="magic">Stroller is working its magic</string>
     <string name="title">S T R O L L E R</string>
+    <string name="icon">icon</string>
+    <string name="google">Sign in with google</string>
+    <string name="facebook">Sign in with facebook</string>
+    <string name="stroll">S T R O L L</string>
+    <string name="textview">TextView</string>
+    <string name="nofavorite">You have no favorites to show</string>
 
 
 </resources>

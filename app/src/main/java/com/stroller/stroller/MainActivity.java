@@ -17,7 +17,6 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -35,8 +34,6 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     private SignInButton mGoogleBtn;
@@ -240,13 +237,5 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             //finish();
         }
-    }
-
-    private void addUserToDB() {
-        FirebaseUser user = mAuth.getCurrentUser();
-        String uniqueId = user.getUid();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("users");
-        myRef.child(uniqueId).setValue("user"+uniqueId);
     }
 }

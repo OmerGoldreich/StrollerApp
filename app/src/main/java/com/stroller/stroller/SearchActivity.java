@@ -9,17 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 
-import com.stroller.stroller.FragmentTwo;
 public class SearchActivity extends AppCompatActivity {
 
 
@@ -45,8 +41,8 @@ public class SearchActivity extends AppCompatActivity {
             if(firstName==null){
                 firstName=FirebaseAuth.getInstance().getCurrentUser().getDisplayName().split(" ")[0];
             }
-            TextView username = (TextView)findViewById(R.id.txt);
-            username.setText("Hello, "+firstName);
+            TextView username = findViewById(R.id.txt);
+            username.setText(String.format("Hello, %s", firstName));
             /*ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
             String personPhotoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
             Glide.with(getApplicationContext()).load(personPhotoUrl)
@@ -84,7 +80,7 @@ public class SearchActivity extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -98,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

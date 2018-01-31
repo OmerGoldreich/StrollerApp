@@ -18,7 +18,7 @@
         android:textSize="15sp"
         android:paddingTop="5dp"
         android:textColor="#fff"
-        android:text="You have no favorites to show" />
+        android:text="@string/nofavorite" />
 
 
 </RelativeLayout>

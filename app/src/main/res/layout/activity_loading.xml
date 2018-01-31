@@ -8,6 +8,7 @@
     tools:context="com.stroller.stroller.LoadingActivity">
 
     <TextView
+        android:contentDescription="@string/icon"
         android:id="@+id/appname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon1"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -43,6 +45,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon2"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -60,6 +63,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon3"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -75,6 +79,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon4"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -92,6 +97,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon5"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -108,6 +114,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon6"
         android:layout_width="55dp"
         android:layout_height="60dp"
@@ -124,6 +131,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon7"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -140,6 +148,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon8"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -155,6 +164,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon9"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -171,6 +181,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon10"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -187,6 +198,7 @@
         app:layout_constraintVertical_bias="0.166" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon11"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -203,6 +215,7 @@
         app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon12"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -219,6 +232,7 @@
         app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon13"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -234,6 +248,7 @@
         app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon14"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -250,6 +265,7 @@
         app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon15"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -266,6 +282,7 @@
         app:layout_constraintVertical_bias="0.316" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon16"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -282,6 +299,7 @@
         app:layout_constraintVertical_bias="0.671" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon17"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -298,6 +316,7 @@
         app:layout_constraintVertical_bias="0.671" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon18"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -313,6 +332,7 @@
         app:layout_constraintVertical_bias="0.671" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon19"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -329,6 +349,7 @@
         app:layout_constraintVertical_bias="0.671" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon20"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -345,6 +366,7 @@
         app:layout_constraintVertical_bias="0.671" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon21"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -361,6 +383,7 @@
         app:layout_constraintVertical_bias="0.825" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon22"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -377,6 +400,7 @@
         app:layout_constraintVertical_bias="0.825" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon23"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -392,6 +416,7 @@
         app:layout_constraintVertical_bias="0.825" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon24"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -408,6 +433,7 @@
         app:layout_constraintVertical_bias="0.825" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon25"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -424,6 +450,7 @@
         app:layout_constraintVertical_bias="0.825" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon26"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -441,6 +468,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon27"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -457,6 +485,7 @@
         app:layout_constraintVertical_bias="0.983" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon28"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -472,6 +501,7 @@
         app:layout_constraintVertical_bias="0.983" />
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon29"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -489,6 +519,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/icon"
         android:id="@+id/icon30"
         android:layout_width="64dp"
         android:layout_height="64dp"

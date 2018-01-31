@@ -19,7 +19,7 @@ public class CustomDialog extends Dialog implements
     private int activity_id;
     private TextView errorMessage;
 
-    public CustomDialog(Activity actv, int actv_id) {
+    CustomDialog(Activity actv, int actv_id) {
         super(actv);
         // TODO Auto-generated constructor stub
         this.activity = actv;
