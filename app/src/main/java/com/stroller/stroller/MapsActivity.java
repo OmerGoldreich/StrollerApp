@@ -138,6 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             else{
                 textViews[i].setVisibility(View.GONE);
                 imageViews[i].setVisibility(View.GONE);
+
             }
         }
     }

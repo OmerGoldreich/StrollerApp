@@ -77,7 +77,7 @@ public class ViewDialog extends Dialog implements
         userID = user.getUid();
         add = findViewById(R.id.btn_dialog);
         add.setOnClickListener(this);
-        faves_list = FragmentTwo.currUserFavesList;
+        faves_list = FragmentTwo.exportCurrUserFavesList; //changed on 31/1 ,was currUserFavesList
 
         name_evaluation = findViewById(R.id.nameReport);
         roadGivenName = findViewById(R.id.road_name);
@@ -175,12 +175,15 @@ public class ViewDialog extends Dialog implements
         final DatabaseReference newRoadNode = currentUserRef.child(newInput);
         final DatabaseReference oldRoadNode = currentUserRef.child(oldInput);
 
-        newRoadNode.child("road_name").setValue(newInput);
-
         DatabaseReference oldRoadDurationRef = oldRoadNode.child("duration");
         DatabaseReference oldRoadInstructionsRef = oldRoadNode.child("instructions");
         DatabaseReference oldRoadPointsRef = oldRoadNode.child("road");
+        DatabaseReference oldRoad_instruct_start_points_Ref = oldRoadNode.child("instruct_start_points");
+        DatabaseReference oldRoad_highlights_points_Ref = oldRoadNode.child("highlights_points");
+        DatabaseReference oldRoad_highlights_category_Ref = oldRoadNode.child("highlights_category");
+        DatabaseReference oldRoad_highlights_name_Ref = oldRoadNode.child("highlights_name");
 
+        newRoadNode.child("road_name").setValue(newInput);
         oldRoadDurationRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -205,7 +208,6 @@ public class ViewDialog extends Dialog implements
 
             }
         });
-
         oldRoadPointsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -217,6 +219,76 @@ public class ViewDialog extends Dialog implements
                     newRoadNode.child("road").child(String.valueOf(index)).child("longitude").setValue(lng);
                     index++;
                 }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoad_instruct_start_points_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index=0;
+                for(DataSnapshot childDS: dataSnapshot.getChildren()){
+                    double lat = childDS.child("latitude").getValue(Double.class);
+                    double lng = childDS.child("longitude").getValue(Double.class);
+                    newRoadNode.child("instruct_start_points").child(String.valueOf(index)).child("latitude").setValue(lat);
+                    newRoadNode.child("instruct_start_points").child(String.valueOf(index)).child("longitude").setValue(lng);
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoad_highlights_points_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index=0;
+                for(DataSnapshot childDS: dataSnapshot.getChildren()){
+                    double lat = childDS.child("latitude").getValue(Double.class);
+                    double lng = childDS.child("longitude").getValue(Double.class);
+                    newRoadNode.child("highlights_points").child(String.valueOf(index)).child("latitude").setValue(lat);
+                    newRoadNode.child("highlights_points").child(String.valueOf(index)).child("longitude").setValue(lng);
+                    index++;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoad_highlights_category_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index=0;
+                for(DataSnapshot childDS: dataSnapshot.getChildren()){
+                    String category = childDS.getValue(String.class);
+                    newRoadNode.child("highlights_category").child(String.valueOf(index)).setValue(category);
+                    index++;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoad_highlights_name_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int index=0;
+                for(DataSnapshot childDS: dataSnapshot.getChildren()){
+                    String highlightName = childDS.getValue(String.class);
+                    newRoadNode.child("highlights_name").child(String.valueOf(index)).setValue(highlightName);
+                    index++;
+                }
+
             }
 
             @Override

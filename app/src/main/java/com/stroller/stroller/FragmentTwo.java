@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -32,7 +33,8 @@ import java.util.List;
 
 public class FragmentTwo extends Fragment {
 
-    public static ArrayList<String> currUserFavesList = new ArrayList<>();
+    public ArrayList<String> currUserFavesList = new ArrayList<>();
+    public static ArrayList<String> exportCurrUserFavesList = new ArrayList<>();
 
     private int LastChangedItemPositionInList=-1;
     private FirebaseDatabase mFirebaseDatabase;
@@ -272,7 +274,7 @@ public class FragmentTwo extends Fragment {
 
             }
         });
-
+        exportCurrUserFavesList = currUserFavesList;
         return v;
     }
 
