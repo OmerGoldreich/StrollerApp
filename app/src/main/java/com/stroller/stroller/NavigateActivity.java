@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -44,13 +44,12 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
     private static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
     // Create a stroke pattern of a gap followed by a dot.
     private static final List<PatternItem> PATTERN_POLYLINE_DOTTED = Arrays.asList(GAP, DOT);
-    private static double currLocationLAT;
-    private static double currLocationLNG;
     private GoogleMap mMap;
     public String[] instructions;
     public List<LatLng> instructPoints;
     public TextView box;
     public int index = 1;
+    public int arrow_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,7 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
 
         String htmlInstruct = getIntent().getStringExtra("instruct");
         htmlInstruct = htmlInstruct.replaceAll("&nbsp;", "");
-        htmlInstruct = htmlInstruct.replaceAll("<div.*?>", "\n\n- ");
+        htmlInstruct = htmlInstruct.replaceAll("<div.*?>", "\n\n");
         String instruct = htmlInstruct.replaceAll("<.*?>", "");
 
         instructions = instruct.split("\n\n");
@@ -71,12 +70,43 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         instructPoints = MapsActivity.route_instruc_strt_pnts;
 
         box = findViewById(R.id.instructions);
+        box.setMovementMethod(new ScrollingMovementMethod());
         box.setText(instructions[0]);
+        View.OnTouchListener touchListener = new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                //view.performClick();
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_RIGHT = 2;
+
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    if(motionEvent.getRawX() >= (box.getRight() - box.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        // your action here
+                        if(arrow_index != (instructions.length - 1)){
+                            arrow_index++;
+                            box.setText(instructions[arrow_index]);
+                        }
+
+                        return true;
+                    }
+                    else if(motionEvent.getRawX() >= (box.getLeft() - box.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
+                        // your action here
+                        if(arrow_index != 0){
+                            arrow_index--;
+                            box.setText(instructions[arrow_index]);
+                        }
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
+        box.setOnTouchListener(touchListener);
 
         ImageButton stop = findViewById(R.id.stop);
         stop.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(NavigateActivity.this, UserFeedbackActivity.class);
+                Intent intent = new Intent(NavigateActivity.this, SearchActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -140,13 +170,16 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
             public void onLocationChanged(Location location) {
                 double currLat = location.getLatitude();
                 double currLng = location.getLongitude();
-                currLocationLAT = currLat;
-                currLocationLNG = currLng;
-                Log.d("curr location ",currLocationLAT+" "+currLocationLNG);
                 if(index < instructPoints.size()) {
                     if (Math.pow((currLat - instructPoints.get(index).latitude), 2)
                             + Math.pow((currLng - instructPoints.get(index).longitude), 2) <= Math.pow(0.0007, 2)) {
+                        if(index == instructPoints.size() - 1){
+                            Intent intent = new Intent(NavigateActivity.this, SearchActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                         index++;
+                        arrow_index = index;
                         box.setText(instructions[index]);
                         box.setMovementMethod(new ScrollingMovementMethod());
                     }
@@ -191,7 +224,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     enableMyLocationIfPermitted();
-                } else {
                 }
             }
 

@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="864dp"
+        android:layout_height="900dp"
         android:layout_weight="1.0"
         android:orientation="vertical">
 
@@ -47,6 +47,16 @@
             map:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/instructions_title"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="20sp"
+                android:text="@string/instructions"
+                android:textAlignment="center"/>
+
+            <TextView
                 android:id="@+id/instructions"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -55,10 +65,15 @@
                 android:paddingLeft="5dp"
                 android:paddingStart="5dp"
                 android:paddingRight="5dp"
-                android:paddingTop="5dp"
+                android:paddingTop="35dp"
                 android:scrollbars="vertical"
                 android:textColor="#585252"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/next_s"
+                android:drawableEnd="@drawable/next_s"
+                android:drawableLeft="@drawable/next_l"
+                android:drawableStart="@drawable/next_l"/>
         </android.support.constraint.ConstraintLayout>
 
         <TextView
@@ -86,7 +101,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="6dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_edittext"
             android:src="@drawable/stop"
             map:layout_constraintStart_toEndOf="@+id/constraintLayout"

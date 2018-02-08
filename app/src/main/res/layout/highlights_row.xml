@@ -7,28 +7,25 @@
     <ImageView
         android:contentDescription="@string/icon"
         android:id="@+id/list_loc_icon"
-        android:layout_width="35dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
         android:adjustViewBounds="true"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="10dp"
-        android:paddingRight="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:baselineAligned="false"
         android:scaleType="fitStart"
-        android:src="@drawable/like2"/>
+        android:src="@drawable/eyeheart"/>
 
     <TextView
         android:id="@+id/row_text"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="@string/textview"
-        android:textSize="20sp"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:paddingStart="10dp"
-        android:paddingRight="10dp">
+        android:textColor="#585252"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingStart="8dp"
+        android:paddingRight="8dp">
     </TextView>
-
-
-
 </LinearLayout>

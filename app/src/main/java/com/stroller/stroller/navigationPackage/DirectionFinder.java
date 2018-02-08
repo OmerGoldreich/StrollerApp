@@ -182,7 +182,7 @@ public class DirectionFinder {
                     double lat = jsonEndInstruct.getDouble("lat");
                     double lng = jsonEndInstruct.getDouble("lng");
                     startInstructPoints.add(new LatLon(lat,lng));
-                    instruct = instruct.concat("- ");
+                    //instruct = instruct.concat("- ");
                     instruct = instruct.concat(step.getString("html_instructions"));
                     instruct = instruct.concat("\n\n");
                 }
