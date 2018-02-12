@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.stroller.stroller.navigationPackage.DirectionFinder;
+import com.stroller.stroller.navigationPackage.DirectionFinderGoogleMap;
 import com.stroller.stroller.navigationPackage.DirectionFinderListener;
 import com.stroller.stroller.navigationPackage.Highlight;
 import com.stroller.stroller.navigationPackage.Route;
@@ -52,6 +53,7 @@ public class LoadingActivity extends AppCompatActivity implements DirectionFinde
             String destination = getIntent().getStringExtra("dest");
             Log.i("LoadingActivity","origin:"+origin+" dest:"+destination);
             try {
+                new DirectionFinderGoogleMap(this,origin,destination).execute();
                 new DirectionFinder(this, origin, destination,favesOrSearch).execute();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

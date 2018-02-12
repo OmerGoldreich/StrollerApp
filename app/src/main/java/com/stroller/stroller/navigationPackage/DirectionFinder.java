@@ -167,7 +167,6 @@ public class DirectionFinder {
                 JSONObject jsonDuration = jsonLeg.getJSONObject("duration");
                 String durationString = jsonDuration.getString("text");
                 value += jsonDuration.getInt("value");
-                Log.d("duration",durationString);
                 String[] parseDuration = durationString.split(" ");
                 if(parseDuration[1].contains("min")){
                     minutes += Integer.parseInt(parseDuration[0]);
@@ -191,9 +190,12 @@ public class DirectionFinder {
                 hours += minutes / 60;
                 minutes = minutes % 60;
             }
+
             String duration = Integer.toString(hours).concat("h\n").concat(Integer.toString(minutes)).concat("m");
             route.instructions = instruct;
-            route.duration = new Duration(duration,value);
+            route.duration = new Duration(duration,value); //chANGED from Duration(duration,value) to minutes);
+            route.minutes = minutes;
+            route.originalDuration = DirectionFinderGoogleMap.GoogleMapsRouteDurationInMinutes;
             route.instructionsPoints = startInstructPoints;
             routes.add(route);
         }

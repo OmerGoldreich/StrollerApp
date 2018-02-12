@@ -1,6 +1,9 @@
 package com.stroller.stroller;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,8 +11,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.TabLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +50,36 @@ public class SearchActivity extends AppCompatActivity {
             }
             TextView username = findViewById(R.id.txt);
             username.setText(String.format("Hello, %s", firstName));
-            /*ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
-            String personPhotoUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
-            Glide.with(getApplicationContext()).load(personPhotoUrl)
-                    .thumbnail(0.5f)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgProfilePic);*/
+            ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
+            String ProfilePicURL = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
+       //     String ProfilePicURL="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyqAAAAJGFlNWJiODA3LWZkNzctNGNhOC1iYTZkLTc5NzFlNjFmMmU0Ng.jpg";
+            // show The Image
+            new DownloadImageTask(imgProfilePic)
+                    .execute(ProfilePicURL);
+        }
+    }
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 

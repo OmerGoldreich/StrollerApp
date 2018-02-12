@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,6 +44,8 @@ public class FragmentTwo extends Fragment {
     public static List<LatLng> faves_polyline;
     public static List<LatLng> faves_instruct_pnts;
     public static String duration_from_faves;
+    public static String duration_in_minutes_from_faves;
+    public static String googlemaps_duration_from_faves;
     public static String instructions_from_faves;
     public static List<Highlight> route_highlights;
     public static List<String> route_highlights_name;
@@ -105,10 +106,14 @@ public class FragmentTwo extends Fragment {
                 final List<String> finalHighLightsCategoryList = new ArrayList<>();
                 final List<String> finalHighLightsNameList = new ArrayList<>();
                 final String[] duration = new String[1];
+                final String[] durationInMinutes = new String[1];
+                final String[] googlemapsdDuration = new String[1];
                 final String[] instructions = new String[1];
 
                 route_highlights = new ArrayList<>();
                 DatabaseReference road_duration = currentUserRef.child(roadAtCurrPosition).child("duration");
+                DatabaseReference road_duration_in_minutes = currentUserRef.child(roadAtCurrPosition).child("duration_in_minutes");
+                DatabaseReference googlemaps_duration = currentUserRef.child(roadAtCurrPosition).child("googleMaps_duration");
                 DatabaseReference road_instructions = currentUserRef.child(roadAtCurrPosition).child("instructions");
                 DatabaseReference instruct_start_points = currentUserRef.child(roadAtCurrPosition).child("instruct_start_points");
                 DatabaseReference highlights_pnts = currentUserRef.child(roadAtCurrPosition).child("highlights_points");
@@ -136,6 +141,30 @@ public class FragmentTwo extends Fragment {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         duration[0] = dataSnapshot.getValue(String.class);
                         duration_from_faves = duration[0];
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                road_duration_in_minutes.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        durationInMinutes[0] = dataSnapshot.getValue(String.class);
+                        duration_in_minutes_from_faves = durationInMinutes[0];
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                googlemaps_duration.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        googlemapsdDuration[0] = dataSnapshot.getValue(String.class);
+                        googlemaps_duration_from_faves = googlemapsdDuration[0];
                     }
 
                     @Override

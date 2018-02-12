@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -64,9 +65,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean isMapReady=false;
     private boolean isViewReady=false;
     public static String duration = "";
+    public static int stroller_duration_minutes;
     private static List<LatLng> decodedPolylineMaps;
     public static List<LatLng> route_instruc_strt_pnts;
     public static String instructions="";
+    public static int google_original_duration;
 
     private ArrayList<String> titles;
     private ArrayList<Integer> imageIds;
@@ -210,6 +213,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return;
             }
 
+
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
             double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
             LatLng originLoc = new LatLng(newLat,newLon);
@@ -287,6 +291,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             instruct = route.instructions;
             instructions=instruct;
             duration = route.duration.text;
+            stroller_duration_minutes=route.minutes;
+            google_original_duration = route.originalDuration;
+
         }
         decodedPolylineMaps=new ArrayList<>();
         for (LatLon latLon : routes.get(0).points) {
@@ -302,6 +309,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
         ArrayList<Route> routeList=new ArrayList<>();
         String duration_from_faves = FragmentTwo.duration_from_faves;
+        String duration_in_minutes_from_faves = FragmentTwo.duration_in_minutes_from_faves;
+        String googlemaps_duration_from_faves = FragmentTwo.googlemaps_duration_from_faves;
         String instructions_from_faves = FragmentTwo.instructions_from_faves;
         List<String> highlights_categories = FragmentTwo.route_highlights_category;
         List<String> highlights_names = FragmentTwo.route_highlights_name;
@@ -317,6 +326,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng endLoc = points.get(points.size() - 1);
             duration = duration_from_faves;
             instruct = instructions_from_faves;
+            google_original_duration = Integer.parseInt(googlemaps_duration_from_faves);
+            stroller_duration_minutes = Integer.parseInt(duration_in_minutes_from_faves);
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! NEW 19/1 BY TALA !!!!!!!!!!!!!!
             Route route_from_faves = new Route();
@@ -332,6 +343,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             route_from_faves.startLocation = new LatLon(startLoc.latitude,startLoc.longitude);
             route_from_faves.endLocation = new LatLon(endLoc.latitude,endLoc.longitude);
             route_from_faves.duration =  new Duration(duration_from_faves,20);/////CHANGE TO REAL VALUE AFTER INSERTING TO DB TALA
+            route_from_faves.originalDuration = Integer.parseInt(googlemaps_duration_from_faves);
+            route_from_faves.minutes = Integer.parseInt(duration_in_minutes_from_faves);
             route_from_faves.startAddress="favesStartAddress";
             route_from_faves.endAddress="favesEndAddress";
             route_from_faves.distance = new Distance("",16);///these are random values -temporary
@@ -392,6 +405,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 alert.show();
             }
         });
+        final ImageButton extraInfoButton = findViewById(R.id.extraInfo);
+        extraInfoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final compareDurationDialog alert = new compareDurationDialog(MapsActivity.this,google_original_duration,stroller_duration_minutes);
+                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                alert.show();
+                /*
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        alert.dismiss();
+                    }
+                }, 3000); // 3000 milliseconds delay */
+            }
+        });
+
     }
     @Override
     public void onGlobalLayout() {

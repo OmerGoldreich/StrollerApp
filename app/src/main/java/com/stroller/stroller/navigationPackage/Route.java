@@ -14,4 +14,6 @@ public class Route implements Serializable{
     public String instructions;
     public List<LatLon> instructionsPoints;
     public List<LatLon> points;
+    public int originalDuration;
+    public int minutes;
 }

@@ -141,6 +141,8 @@ public class ViewDialog extends Dialog implements
                     currentUserRef.child(input).child("road").setValue(decodedPolyline);
                     currentUserRef.child(input).child("instruct_start_points").setValue(MapsActivity.route_instruc_strt_pnts);
                     currentUserRef.child(input).child("duration").setValue(MapsActivity.duration);
+                    currentUserRef.child(input).child("duration_in_minutes").setValue(String.valueOf(MapsActivity.stroller_duration_minutes));
+                    currentUserRef.child(input).child("googleMaps_duration").setValue(String.valueOf(MapsActivity.google_original_duration));
                     currentUserRef.child(input).child("instructions").setValue(MapsActivity.instructions);
 
                     List<Highlight> highlights = MapsActivity.highlights;
@@ -176,6 +178,9 @@ public class ViewDialog extends Dialog implements
         final DatabaseReference oldRoadNode = currentUserRef.child(oldInput);
 
         DatabaseReference oldRoadDurationRef = oldRoadNode.child("duration");
+        DatabaseReference oldRoad_duration_in_minutes_Ref = oldRoadNode.child("duration_in_minutes");
+        DatabaseReference oldRoad_googleMaps_duration_Ref = oldRoadNode.child("googleMaps_duration");
+
         DatabaseReference oldRoadInstructionsRef = oldRoadNode.child("instructions");
         DatabaseReference oldRoadPointsRef = oldRoadNode.child("road");
         DatabaseReference oldRoad_instruct_start_points_Ref = oldRoadNode.child("instruct_start_points");
@@ -189,6 +194,31 @@ public class ViewDialog extends Dialog implements
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String oldDuration = dataSnapshot.getValue(String.class);
                 newRoadNode.child("duration").setValue(oldDuration);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        oldRoad_duration_in_minutes_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String oldDuration = dataSnapshot.getValue(String.class);
+                newRoadNode.child("duration_in_minutes").setValue(oldDuration);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        oldRoad_googleMaps_duration_Ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String oldDuration = dataSnapshot.getValue(String.class);
+                newRoadNode.child("googleMaps_duration").setValue(oldDuration);
             }
 
             @Override

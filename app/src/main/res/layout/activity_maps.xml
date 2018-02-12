@@ -82,22 +82,21 @@
             android:scaleType="fitCenter"/>
 
         <ImageButton
-            android:contentDescription="@string/icon"
-            android:id="@+id/imageButton2"
-            android:layout_height="wrap_content"
+            android:id="@+id/extraInfo"
             android:layout_width="45dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
             android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
             android:background="@drawable/rounded_edittext"
+            android:contentDescription="@string/icon"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
             android:src="@drawable/routeset"
             map:layout_constraintStart_toEndOf="@+id/constraintLayout"
             map:layout_constraintTop_toBottomOf="@+id/imageButton"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            />
+            android:layout_marginLeft="4dp" />
 
         <Button
             android:id="@+id/button2"

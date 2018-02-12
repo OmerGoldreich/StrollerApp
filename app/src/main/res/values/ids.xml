@@ -2,4 +2,5 @@
 <resources>
     <item name="addtoFaves_text_dialog" type="id" />
     <item name="btn_dialog" type="id">dialog_button</item>
+    <item name="view_pager" type="id">view_pager</item>
 </resources>
