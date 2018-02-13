@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,35 +16,43 @@ public class CustomDialog extends Dialog implements
     public Activity activity;
     public Button back;
     private int activity_id;
-    private TextView errorMessage;
+    private int diff;
 
     CustomDialog(Activity actv, int actv_id) {
         super(actv);
-        // TODO Auto-generated constructor stub
         this.activity = actv;
         this.activity_id = actv_id;
-        this.errorMessage = activity.findViewById(R.id.errorMessage);
-        Log.d("isNull", errorMessage == null ? "yes" : "no");
+    }
+
+    CustomDialog(Activity actv, int actv_id, int original_duration, int stroller_duration) {
+        super(actv);
+        this.activity = actv;
+        this.activity_id = actv_id;
+        this.diff = stroller_duration - original_duration;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if(activity_id == 0){
-            setContentView(R.layout.custom_dialog);
-        } else {
-            setContentView(R.layout.duration_dialog);
-        }
+        setContentView(R.layout.duration_dialog);
         back = findViewById(R.id.back);
         back.setOnClickListener(this);
+        TextView msg = findViewById(R.id.errorMessage);
+        if(activity_id == 0){
+            msg.setText(R.string.orig_dest);
+        } else if (activity_id == 2){
+            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems");
+            TextView title = findViewById(R.id.hold);
+            title.setText("Route Info");
+        }
     }
 
     @Override
     public void onClick(View v) {
-        if(activity_id == 0){
+        if(activity_id == 0 || activity_id == 2){
             dismiss();
-        } else {
+        } else if(activity_id == 1) {
             Intent intent = new Intent(activity, SearchActivity.class);
             activity.startActivity(intent);
             dismiss();

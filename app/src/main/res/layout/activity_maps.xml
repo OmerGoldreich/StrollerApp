@@ -93,7 +93,7 @@
             android:contentDescription="@string/icon"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/routeset"
+            android:src="@drawable/info"
             map:layout_constraintStart_toEndOf="@+id/constraintLayout"
             map:layout_constraintTop_toBottomOf="@+id/imageButton"
             android:layout_marginLeft="4dp" />

@@ -92,7 +92,7 @@
         <Button
             android:id="@+id/back"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="16dp"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true"

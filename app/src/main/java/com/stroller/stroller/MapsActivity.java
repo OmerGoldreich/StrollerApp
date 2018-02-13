@@ -408,7 +408,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final ImageButton extraInfoButton = findViewById(R.id.extraInfo);
         extraInfoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                final compareDurationDialog alert = new compareDurationDialog(MapsActivity.this,google_original_duration,stroller_duration_minutes);
+                CustomDialog alert = new CustomDialog(MapsActivity.this, 2, google_original_duration, stroller_duration_minutes);
                 alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 alert.show();
                 /*
