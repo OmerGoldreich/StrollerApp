@@ -42,7 +42,7 @@ public class CustomDialog extends Dialog implements
         if(activity_id == 0){
             msg.setText(R.string.orig_dest);
         } else if (activity_id == 2){
-            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems");
+            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems!");
             TextView title = findViewById(R.id.hold);
             title.setText("Route Info");
         }
