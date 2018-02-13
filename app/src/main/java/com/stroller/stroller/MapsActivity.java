@@ -9,10 +9,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -56,8 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static PolylineOptions polylineOptions;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
-    public  static List<Highlight> highlights=new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
+    public  static List<Highlight> highlights=new ArrayList<>();
     public Map<String,String> descDict = new HashMap<>();
     public Map<String,Integer> imgDict = new HashMap<>();
     public String instruct = "";
@@ -75,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Integer> imageIds;
     private ArrayList<Marker> markers;
     ListView listView1;
+    private boolean from_faves = false;
 
 
     @Override
@@ -90,6 +89,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String from_faves_or_search = getIntent().getStringExtra("FAVES_OR_SEARCH");
         if (!from_faves_or_search.equals("faves")) {
             fixImagesTexts();
+        } else {
+            from_faves = true;
+            ImageButton addFaves = findViewById(R.id.imageButton);
+            addFaves.setImageResource(R.drawable.faves);
+            addFaves.setClickable(false);
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -373,7 +377,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Log.i("MapsActivity","before permission check");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -384,7 +387,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             //return;
         }
-        Log.i("MapsActivity","after permission check");
         //mMap.setMyLocationEnabled(true);
         isMapReady=true;
         if(isMapReady&&isViewReady) {
@@ -396,15 +398,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }, 50);*/
             sendRequest();
         }
-
-        final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
-        AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0,decodedPolylineMaps);
-                alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                alert.show();
-            }
-        });
+        if(!from_faves){
+            final ImageButton AddtoFavesButton = findViewById(R.id.imageButton);
+            AddtoFavesButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    ViewDialog alert = new ViewDialog(MapsActivity.this, "", 0,decodedPolylineMaps);
+                    alert.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    alert.show();
+                }
+            });
+        }
         final ImageButton extraInfoButton = findViewById(R.id.extraInfo);
         extraInfoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -76,11 +75,9 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         View.OnTouchListener touchListener = new View.OnTouchListener(){
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                //view.performClick();
                 final int DRAWABLE_BOTTOM = 3;
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     if(motionEvent.getRawX() >= (box.getBottom() - box.getCompoundDrawables()[DRAWABLE_BOTTOM].getBounds().width())) {
-                        // show dialog
                         CustomDialog dialog = new CustomDialog(NavigateActivity.this, 3, instruct);
                         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         dialog.show();
