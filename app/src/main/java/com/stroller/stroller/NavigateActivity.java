@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
@@ -49,7 +51,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
     public List<LatLng> instructPoints;
     public TextView box;
     public int index = 1;
-    public int arrow_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         String htmlInstruct = getIntent().getStringExtra("instruct");
         htmlInstruct = htmlInstruct.replaceAll("&nbsp;", "");
         htmlInstruct = htmlInstruct.replaceAll("<div.*?>", "\n\n");
-        String instruct = htmlInstruct.replaceAll("<.*?>", "");
+        final String instruct = htmlInstruct.replaceAll("<.*?>", "");
 
         instructions = instruct.split("\n\n");
 
@@ -76,25 +77,13 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 //view.performClick();
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_RIGHT = 2;
-
+                final int DRAWABLE_BOTTOM = 3;
                 if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    if(motionEvent.getRawX() >= (box.getRight() - box.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        // your action here
-                        if(arrow_index != (instructions.length - 1)){
-                            arrow_index++;
-                            box.setText(instructions[arrow_index]);
-                        }
-
-                        return true;
-                    }
-                    else if(motionEvent.getRawX() >= (box.getLeft() - box.getCompoundDrawables()[DRAWABLE_LEFT].getBounds().width())) {
-                        // your action here
-                        if(arrow_index != 0){
-                            arrow_index--;
-                            box.setText(instructions[arrow_index]);
-                        }
+                    if(motionEvent.getRawX() >= (box.getBottom() - box.getCompoundDrawables()[DRAWABLE_BOTTOM].getBounds().width())) {
+                        // show dialog
+                        CustomDialog dialog = new CustomDialog(NavigateActivity.this, 3, instruct);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
                         return true;
                     }
                 }
@@ -179,7 +168,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
                             finish();
                         }
                         index++;
-                        arrow_index = index;
                         box.setText(instructions[index]);
                         box.setMovementMethod(new ScrollingMovementMethod());
                     }

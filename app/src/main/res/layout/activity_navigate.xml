@@ -70,10 +70,7 @@
                 android:textColor="#585252"
                 android:textSize="20sp"
                 android:drawablePadding="10dp"
-                android:drawableRight="@drawable/next_s"
-                android:drawableEnd="@drawable/next_s"
-                android:drawableLeft="@drawable/next_l"
-                android:drawableStart="@drawable/next_l"/>
+                android:drawableBottom="@drawable/next_b"/>
         </android.support.constraint.ConstraintLayout>
 
         <TextView
