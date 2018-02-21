@@ -5,10 +5,12 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -95,6 +97,7 @@ public class ViewDialog extends Dialog implements
                 if(checkIfInputExists(String.valueOf(s))){
                     name_evaluation.setText("name already exists");
                     add.setEnabled(false);
+                    
                 }
                 else {
                     name_evaluation.setText("");
@@ -106,6 +109,9 @@ public class ViewDialog extends Dialog implements
 
     @Override
     public void onClick(View v) {
+        final LayoutInflater factory = getLayoutInflater();
+        ImageButton addToFavesFromMapsActivity = (ImageButton) this.activity.findViewById(R.id.imageButton);
+        addToFavesFromMapsActivity.setEnabled(false);
         final String roadname = roadGivenName.getText().toString();
         if(!roadname.equals("")){
             if(caller_id == 0){

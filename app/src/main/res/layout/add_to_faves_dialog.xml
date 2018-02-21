@@ -4,7 +4,7 @@
     android:layout_width="300dp"
     android:layout_height="150dp"
     android:background="@drawable/rounddialog"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:id="@+id/road_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:maxLength="30"
             android:hint="@string/example"
             android:inputType="textCapWords"
             android:textAlignment="center"

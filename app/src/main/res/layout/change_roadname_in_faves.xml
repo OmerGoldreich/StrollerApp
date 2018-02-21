@@ -65,6 +65,7 @@
             android:inputType="textCapWords"
             android:textAlignment="center"
             android:hint="@string/example"
+            android:maxLength="30"
             android:textColorHint="#585252"
             android:textColor="#585252"
             app:layout_constraintBottom_toBottomOf="parent"

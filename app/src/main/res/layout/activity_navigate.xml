@@ -69,8 +69,20 @@
                 android:scrollbars="vertical"
                 android:textColor="#585252"
                 android:textSize="20sp"
-                android:drawablePadding="10dp"
-                android:drawableBottom="@drawable/next_b"/>
+                android:drawablePadding="10dp"/>
+                <!--android:drawableBottom="@drawable/next_b"-->
+
+
+            <Button
+                android:id="@+id/down_arrow"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/next_b"
+                map:layout_constraintBottom_toBottomOf="parent"
+                map:layout_constraintEnd_toEndOf="parent"
+                map:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <TextView
