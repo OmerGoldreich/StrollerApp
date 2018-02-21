@@ -109,9 +109,9 @@ public class ViewDialog extends Dialog implements
 
     @Override
     public void onClick(View v) {
-        final LayoutInflater factory = getLayoutInflater();
-        ImageButton addToFavesFromMapsActivity = (ImageButton) this.activity.findViewById(R.id.imageButton);
+        ImageButton addToFavesFromMapsActivity = this.activity.findViewById(R.id.imageButton);
         addToFavesFromMapsActivity.setEnabled(false);
+        addToFavesFromMapsActivity.setImageResource(R.drawable.faves);
         final String roadname = roadGivenName.getText().toString();
         if(!roadname.equals("")){
             if(caller_id == 0){
