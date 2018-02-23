@@ -56,12 +56,15 @@ public class CustomDialog extends Dialog implements
         if(activity_id == 0){
             msg.setText(R.string.orig_dest);
         } else if (activity_id == 2){
-            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems!");
             title.setText("Route Info");
+            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems!");
         } else if (activity_id == 3){
+            title.setText("Full Instructions");
             msg.setText(instructions);
             msg.setMovementMethod(new ScrollingMovementMethod());
-            title.setText("Full Instructions");
+        } else if (activity_id == 4){
+            title.setText("We're Sorry");
+            msg.setText("Something must have gone wrong. Please try again.");
         }
     }
 
@@ -71,7 +74,6 @@ public class CustomDialog extends Dialog implements
             Intent intent = new Intent(activity, SearchActivity.class);
             activity.startActivity(intent);
             dismiss();
-
         } else {
             dismiss();
         }

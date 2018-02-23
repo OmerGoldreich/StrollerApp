@@ -7,22 +7,19 @@
     <string name="editText3">"Where do you want to go?"</string>
     <string name="frg2">"You currently have no favorite routes."</string>
     <string name="btn1">"Logout"</string>
-    <string name="txt">"Welcome, Regina"</string>
+    <string name="txt">"Welcome"</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_get_polyline">getPolyline</string>
     <string name="title_activity_find_path">Map</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="FAVES_OR_SEARCH">get value of 1 or 2</string>
-    <string name="youMadeIT">You have reached your destination!</string>
-    <string name="tell_us_how_you_feel">How was your experience?</string>
-    <string name="whyRate">Help us do a better job. Rating your route will improve the experience of other users.</string>
     <string name="title_activity_store_favorites">storeFavorites</string>
     <string name="addtoFaves_text_dialog">Choose Name</string>
     <string name="change_name">Change Name</string>
     <string name="title_activity_navigation">NavigationActivity</string>
     <string name="title_activity_navigate">Map</string>
     <string name="orig_dest">You need to choose an origin and a destination.</string>
-    <string name="duration">Strolling this route will take more than three hours.</string>
+    <string name="duration">This route is longer than 1.5 hours. Strolling it will take forever!</string>
     <string name="hold">Hold On</string>
     <string name="back">Go Back</string>
     <string name="example">e.g. Montmartre, Paris</string>
@@ -38,7 +35,6 @@
     <string name="textview">TextView</string>
     <string name="nofavorite">You have no favorites to show</string>
     <string name="instructions">I N S T R U C T I O N S</string>
-    <string name="cool">cool!</string>
 
 
 </resources>

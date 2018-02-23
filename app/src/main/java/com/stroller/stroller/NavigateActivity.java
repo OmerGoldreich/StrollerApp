@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,7 +16,6 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.method.ScrollingMovementMethod;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -75,7 +73,7 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
         box.setMovementMethod(new ScrollingMovementMethod());
         box.setText(instructions[0]);
 
-        Button down_arrow = (Button) findViewById(R.id.down_arrow);
+        Button down_arrow = findViewById(R.id.down_arrow);
         down_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,29 +82,6 @@ public class NavigateActivity extends FragmentActivity implements OnMapReadyCall
                 dialog.show();
             }
         });
-
-/*
-        View.OnTouchListener touchListener = new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                final int DRAWABLE_BOTTOM = 3;
-                Drawable drawable_bottom_arrow = box.getCompoundDrawables()[DRAWABLE_BOTTOM];
-                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    int actionX = (int) motionEvent.getX();
-                    int actionY = (int) motionEvent.getY();
-                  //  if(motionEvent.getRawX() >= (box.getBottom() - box.getCompoundDrawables()[DRAWABLE_BOTTOM].getBounds().width())) {
-                    if(motionEvent.getRawX() >= (box.getBottom() - box.getTotalPaddingBottom())+100) {
-                        CustomDialog dialog = new CustomDialog(NavigateActivity.this, 3, instruct);
-                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                        dialog.show();
-                        return true;
-                    }
-                }
-                return false;
-            }
-        };
-        box.setOnTouchListener(touchListener);
-*/
 
         ImageButton stop = findViewById(R.id.stop);
         stop.setOnClickListener(new View.OnClickListener() {

@@ -3,6 +3,8 @@ package com.stroller.stroller;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -50,12 +52,19 @@ public class SearchActivity extends AppCompatActivity {
             }
             TextView username = findViewById(R.id.txt);
             username.setText(String.format("Hello, %s", firstName));
-            ImageView imgProfilePic = (ImageView)findViewById(R.id.user);
+            ImageView imgProfilePic = findViewById(R.id.user);
             String ProfilePicURL = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
        //     String ProfilePicURL="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyqAAAAJGFlNWJiODA3LWZkNzctNGNhOC1iYTZkLTc5NzFlNjFmMmU0Ng.jpg";
             // show The Image
             new DownloadImageTask(imgProfilePic)
                     .execute(ProfilePicURL);
+            String loading = extras.getString("loading");
+            if(loading!=null){
+                CustomDialog dialog = new CustomDialog(SearchActivity.this, 4);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                return;
+            }
         }
     }
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -88,13 +97,6 @@ public class SearchActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
     }
-
-    //moved to FragmentOne
-    /*public void strollButtonAction(View v) {
-        Intent intent = new Intent(SearchActivity.this, MapsActivity.class);
-        intent.putExtra("FAVES_OR_SEARCH","search");
-        startActivity(intent);
-    }*/
 
     public void logOutButtonAction(View v) {
         Intent intent = new Intent(SearchActivity.this, MainActivity.class);

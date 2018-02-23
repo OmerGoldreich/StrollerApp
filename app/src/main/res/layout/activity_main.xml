@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/pg"
     android:visibility="visible"
-    tools:context="com.stroller.stroller.MainActivity">
+    tools:context="com.stroller.stroller.MainActivity"
+    android:layoutDirection="ltr">
 
 
     <com.google.android.gms.common.SignInButton

@@ -182,8 +182,17 @@ public class DirectionFinder {
                     double lng = jsonEndInstruct.getDouble("lng");
                     startInstructPoints.add(new LatLon(lat,lng));
                     //instruct = instruct.concat("- ");
-                    instruct = instruct.concat(step.getString("html_instructions"));
-                    instruct = instruct.concat("\n\n");
+                    String step_instruct = step.getString("html_instructions");
+                    if(!step_instruct.contains("Destination")){
+                        instruct = instruct.concat(step_instruct);
+                        instruct = instruct.concat("\n\n");
+                    } else {
+                        Log.d("legs",Integer.toString(k));
+                        if(j == jsonLegs.length() - 1){
+                            instruct = instruct.concat(step_instruct);
+                            instruct = instruct.concat("\n\n");
+                        }
+                    }
                 }
             }
             if(minutes/60 > 0){
