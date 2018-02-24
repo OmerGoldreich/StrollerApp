@@ -39,6 +39,9 @@
     <string name="full_instruct">Full Instructions</string>
     <string name="sorry">"We're Sorry"</string>
     <string name="sorry_body">Something must have gone wrong. Please try again.</string>
+    <string name="location">Location Services</string>
+    <string name="settings">Please turn on your location services to receive optimal results.</string>
+    <string name="go">settings</string>
 
 
 </resources>

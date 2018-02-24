@@ -1,10 +1,18 @@
 package com.stroller.stroller;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +38,8 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
-
-public class FragmentOne extends Fragment implements DirectionFinderListener {
+import android.Manifest;
+public class FragmentOne extends Fragment implements DirectionFinderListener, LocationListener {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
     int PLACE_PICKER_REQUEST = 1;
@@ -40,6 +48,8 @@ public class FragmentOne extends Fragment implements DirectionFinderListener {
     String dest = "";
     Double lat;
     Double lng;
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
 
 
 
@@ -51,6 +61,35 @@ public class FragmentOne extends Fragment implements DirectionFinderListener {
     public void onCreate(Bundle savedInstanceState) {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         super.onCreate(savedInstanceState);
+        final Context context = getContext();
+        checkLocationPermission();
+        checkIfLocationEnabled(context);
+    }
+
+    private void checkIfLocationEnabled(final Context context){
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean network_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch(Exception ex) {}
+
+        try {
+            network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch(Exception ex) {}
+
+        if(!gps_enabled && !network_enabled) {
+            Dialog strollerDialog = new CustomDialog(getActivity(),5);
+            strollerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            strollerDialog.show();
+        }
+    }
+
+    public void checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_LOCATION);
+        }
     }
 
     @Override
@@ -58,6 +97,7 @@ public class FragmentOne extends Fragment implements DirectionFinderListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_one, container, false);
+        // requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
         EditText originEditText = v.findViewById(R.id.editText4);
         originEditText.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -156,5 +196,25 @@ public class FragmentOne extends Fragment implements DirectionFinderListener {
 
     @Override
     public void onDirectionFinderSuccess(List<Route> route, List<Highlight> highlights) {
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 }

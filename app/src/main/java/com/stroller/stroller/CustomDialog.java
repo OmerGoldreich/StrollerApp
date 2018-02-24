@@ -2,7 +2,9 @@ package com.stroller.stroller;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
@@ -46,6 +48,8 @@ public class CustomDialog extends Dialog implements
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         if(activity_id == 3){
             setContentView(R.layout.instruction_dialog);
+        } else if (activity_id == 5) {
+            setContentView(R.layout.enable_location_dialog);
         } else {
             setContentView(R.layout.duration_dialog);
         }
@@ -72,6 +76,12 @@ public class CustomDialog extends Dialog implements
 
     @Override
     public void onClick(View v) {
-        dismiss();
+        if(activity_id == 5){
+            Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            activity.startActivity(myIntent);
+            dismiss();
+        } else {
+            dismiss();
+        }
     }
 }
