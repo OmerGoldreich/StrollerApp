@@ -7,7 +7,7 @@ Simply select your origin and destination, and let Stroller provide you with the
 Discover new restaurants, cafes, pubs, and many more attractions you would have otherwise missed!
 
 # Screenshots
-<img src="https://github.com/OmerGoldreich/StrollerApp/blob/master/Documentation/screenshots.png">
+<img src="https://github.com/OmerGoldreich/StrollerApp/blob/master/Documentation/sc.png">
 
 # Features
 
