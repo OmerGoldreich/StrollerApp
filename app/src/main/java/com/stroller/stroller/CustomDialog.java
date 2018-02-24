@@ -2,7 +2,6 @@ package com.stroller.stroller;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -20,7 +19,7 @@ public class CustomDialog extends Dialog implements
     private int diff = 0;
     private String instructions = "";
 
-    CustomDialog(Activity actv, int actv_id) {
+    public CustomDialog(Activity actv, int actv_id) {
         super(actv);
         this.activity = actv;
         this.activity_id = actv_id;
@@ -70,12 +69,6 @@ public class CustomDialog extends Dialog implements
 
     @Override
     public void onClick(View v) {
-        if(activity_id == 1){
-            Intent intent = new Intent(activity, SearchActivity.class);
-            activity.startActivity(intent);
-            dismiss();
-        } else {
-            dismiss();
-        }
+        dismiss();
     }
 }

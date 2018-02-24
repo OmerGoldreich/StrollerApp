@@ -15,7 +15,8 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -72,7 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<String> titles;
     private ArrayList<Integer> imageIds;
     private ArrayList<Marker> markers;
-    ListView listView1;
     private boolean from_faves = false;
 
 
@@ -135,56 +135,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void fixImagesTexts(){
         titles = new ArrayList<>();
         imageIds = new ArrayList<>();
-        /*ImageView[] imageViews={findViewById(R.id.imageView1),findViewById(R.id.imageView2),findViewById(R.id.imageView3),findViewById(R.id.imageView4)};
-        TextView[] textViews={findViewById(R.id.textView1),findViewById(R.id.textView2),findViewById(R.id.textView3),findViewById(R.id.textView4)};*/
+        ImageView[] imageViews={findViewById(R.id.imageView1),findViewById(R.id.imageView2),findViewById(R.id.imageView3),findViewById(R.id.imageView4)};
+        TextView[] textViews={findViewById(R.id.textView1),findViewById(R.id.textView2),findViewById(R.id.textView3),findViewById(R.id.textView4)};
         for(int i=0;i<=3;i++){
             if (i<highlights.size()) {
                 String currentText = descDict.get(highlights.get(i).category);
                 currentText = currentText.replace("{name}", highlights.get(i).name);
                 imageIds.add(imgDict.get(highlights.get(i).category));
                 titles.add(currentText);
-                /*imageViews[i].setImageResource(imgDict.get(highlights.get(i).category));
-                String currentText = descDict.get(highlights.get(i).category);
-                currentText = currentText.replace("{name}", highlights.get(i).name);
-                textViews[i].setText(currentText);*/
+                imageViews[i].setImageResource(imgDict.get(highlights.get(i).category));
+                textViews[i].setText(currentText);
             }
-            /*else{
+            else{
                 textViews[i].setVisibility(View.GONE);
                 imageViews[i].setVisibility(View.GONE);
 
-            }*/
+            }
         }
-
-        final HighlightAdapter adapter = new HighlightAdapter(this, titles, imageIds);
-
-        listView1 = findViewById(R.id.highlight_list);
-        listView1.setAdapter(adapter);
-
-        SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                        listView1,
-                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
-                            @Override
-                            public boolean canDismiss(int position) {
-                                return true;
-                            }
-
-                            @Override
-                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                for (int position : reverseSortedPositions) {
-                                    titles.remove(position);
-                                    imageIds.remove(position);
-                                    markers.get(position).remove();
-                                    markers.remove(position);
-                                    highlights.remove(position);
-                                    adapter.notifyDataSetChanged();
-
-                                }
-
-                            }
-                        });
-        listView1.setOnTouchListener(touchListener);
     }
+
     private int getZoomLevel(double radius) {
         double scale = radius / 500;
         int zoomLevel =(int) (16 - Math.log(scale) / Math.log(2));
@@ -210,14 +179,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markers = new ArrayList<>();
 
         for (Route route : routes) {
-            if(route.duration.value > 10800){
-                CustomDialog dialog = new CustomDialog(MapsActivity.this, 1);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-                return;
-            }
-
-
             double newLat=(route.startLocation.latitude+route.endLocation.latitude)/2;
             double newLon=(route.startLocation.longitude+route.endLocation.longitude)/2;
             LatLng originLoc = new LatLng(newLat,newLon);

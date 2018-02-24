@@ -203,7 +203,7 @@ public class DirectionFinder {
             String duration = Integer.toString(hours).concat("h\n").concat(Integer.toString(minutes)).concat("m");
             route.instructions = instruct;
             route.duration = new Duration(duration,value); //chANGED from Duration(duration,value) to minutes);
-            route.minutes = minutes;
+            route.minutes = minutes + hours*60;
             route.originalDuration = DirectionFinderGoogleMap.GoogleMapsRouteDurationInMinutes;
             route.instructionsPoints = startInstructPoints;
             routes.add(route);

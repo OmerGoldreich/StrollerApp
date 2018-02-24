@@ -20,11 +20,18 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.stroller.stroller.navigationPackage.DirectionFinderGoogleMap;
+import com.stroller.stroller.navigationPackage.DirectionFinderListener;
+import com.stroller.stroller.navigationPackage.Highlight;
+import com.stroller.stroller.navigationPackage.Route;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
-public class FragmentOne extends Fragment {
+public class FragmentOne extends Fragment implements DirectionFinderListener {
     int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     int PLACE_AUTOCOMPLETE_REQUEST_CODE2 = 2;
     int PLACE_PICKER_REQUEST = 1;
@@ -33,6 +40,8 @@ public class FragmentOne extends Fragment {
     String dest = "";
     Double lat;
     Double lng;
+
+
 
     public FragmentOne() {
         // Required empty public constructor
@@ -87,12 +96,11 @@ public class FragmentOne extends Fragment {
                     dialog.show();
                     return;
                 }
-                Intent intent = new Intent(getActivity(), LoadingActivity.class);
-                intent.putExtra("FAVES_OR_SEARCH","search");
-                intent.putExtra("origin",origin);
-                intent.putExtra("dest",dest);
-                startActivity(intent);
-                getActivity().finish();
+                try {
+                    new DirectionFinderGoogleMap(FragmentOne.this, origin, dest,getActivity(),true).execute();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
         return v;
@@ -139,5 +147,14 @@ public class FragmentOne extends Fragment {
 
     private boolean isdigit(char c) {
         return c >= 48 && c <= 57;
+    }
+
+    @Override
+    public void onDirectionFinderStart() {
+
+    }
+
+    @Override
+    public void onDirectionFinderSuccess(List<Route> route, List<Highlight> highlights) {
     }
 }

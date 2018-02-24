@@ -1,10 +1,14 @@
 package com.stroller.stroller.navigationPackage;
 
-/**
- * Created by tala on 12-Feb-18.
- */
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.stroller.stroller.CustomDialog;
+import com.stroller.stroller.LoadingActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,15 +28,28 @@ import java.util.List;
 public class DirectionFinderGoogleMap {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
     private static final String GOOGLE_API_KEY = "AIzaSyDnwLF2-WfK8cVZt9OoDYJ9Y8kspXhEHfI";
+    private Activity activity;
     private DirectionFinderListener listener;
     private String origin;
     private String destination;
     public static int GoogleMapsRouteDurationInMinutes;
-    public DirectionFinderGoogleMap(DirectionFinderListener listener, String origin, String destination) {
+    private boolean fromFragmentOne;
+
+    public DirectionFinderGoogleMap(DirectionFinderListener listener, String origin, String destination, Boolean fromFragmentOne) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
+        this.fromFragmentOne = fromFragmentOne;
     }
+
+    public DirectionFinderGoogleMap(DirectionFinderListener listener, String origin, String destination, Activity actv, Boolean fromFragmentOne) {
+        this.listener = listener;
+        this.origin = origin;
+        this.destination = destination;
+        this.activity = actv;
+        this.fromFragmentOne = fromFragmentOne;
+    }
+
 
     public void execute() throws UnsupportedEncodingException {
         listener.onDirectionFinderStart();
@@ -102,6 +119,24 @@ public class DirectionFinderGoogleMap {
             route.duration = new Duration(jsonDuration.getString("text"), jsonDuration.getInt("value"));
             routes.add(route);
             GoogleMapsRouteDurationInMinutes = route.duration.value/60 ;
-          }
-     }
+            Log.d("googlemap duration", String.valueOf(GoogleMapsRouteDurationInMinutes));
+            if(fromFragmentOne){
+                if(GoogleMapsRouteDurationInMinutes > 120){
+                    CustomDialog dialog = new CustomDialog(this.activity, 1);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
+                }
+                else{
+                    Intent intent = new Intent(activity, LoadingActivity.class);
+                    intent.putExtra("FAVES_OR_SEARCH","search");
+                    intent.putExtra("origin",origin);
+                    intent.putExtra("dest",destination);
+                    activity.startActivity(intent);
+                    activity.finish();
+                }
+
+            }
+
+        }
+    }
 }
