@@ -35,13 +35,6 @@ public class DirectionFinderGoogleMap {
     public static int GoogleMapsRouteDurationInMinutes;
     private boolean fromFragmentOne;
 
-    public DirectionFinderGoogleMap(DirectionFinderListener listener, String origin, String destination, Boolean fromFragmentOne) {
-        this.listener = listener;
-        this.origin = origin;
-        this.destination = destination;
-        this.fromFragmentOne = fromFragmentOne;
-    }
-
     public DirectionFinderGoogleMap(DirectionFinderListener listener, String origin, String destination, Activity actv, Boolean fromFragmentOne) {
         this.listener = listener;
         this.origin = origin;
@@ -102,7 +95,7 @@ public class DirectionFinderGoogleMap {
         if (data == null)
             return;
 
-        List<Route> routes = new ArrayList<Route>();
+        List<Route> routes = new ArrayList<>();
         JSONObject jsonData = new JSONObject(data);
         JSONArray jsonRoutes = jsonData.getJSONArray("routes");
 

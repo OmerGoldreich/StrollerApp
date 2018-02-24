@@ -7,6 +7,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -55,15 +56,17 @@ public class CustomDialog extends Dialog implements
         if(activity_id == 0){
             msg.setText(R.string.orig_dest);
         } else if (activity_id == 2){
-            title.setText("Route Info");
-            msg.setText("This route takes " + diff + " additional minutes, but contains many hidden gems!");
+            title.setText(R.string.info);
+            msg.setText(String.format("This route takes %d additional minutes, but contains many hidden gems!", diff));
         } else if (activity_id == 3){
-            title.setText("Full Instructions");
+            title.setText(R.string.full_instruct);
             msg.setText(instructions);
             msg.setMovementMethod(new ScrollingMovementMethod());
         } else if (activity_id == 4){
-            title.setText("We're Sorry");
-            msg.setText("Something must have gone wrong. Please try again.");
+            ImageView img = findViewById(R.id.missing);
+            img.setImageResource(R.drawable.broken);
+            title.setText(R.string.sorry);
+            msg.setText(R.string.sorry_body);
         }
     }
 

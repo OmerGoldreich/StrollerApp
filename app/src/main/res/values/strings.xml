@@ -34,6 +34,11 @@
     <string name="textview">TextView</string>
     <string name="nofavorite">You have no favorites to show</string>
     <string name="instructions">I N S T R U C T I O N S</string>
+    <string name="exists">name already exists</string>
+    <string name="info">Route Info</string>
+    <string name="full_instruct">Full Instructions</string>
+    <string name="sorry">"We're Sorry"</string>
+    <string name="sorry_body">Something must have gone wrong. Please try again.</string>
 
 
 </resources>

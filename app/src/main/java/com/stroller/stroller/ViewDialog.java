@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -36,7 +35,6 @@ public class ViewDialog extends Dialog implements
 
     private FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef= mFirebaseDatabase.getReference();
     private DatabaseReference usersListRef = myRef.child("users");
     private DatabaseReference currentUserRef;
@@ -95,7 +93,7 @@ public class ViewDialog extends Dialog implements
             @Override
             public void afterTextChanged(Editable s) {
                 if(checkIfInputExists(String.valueOf(s))){
-                    name_evaluation.setText("name already exists");
+                    name_evaluation.setText(R.string.exists);
                     add.setEnabled(false);
                     
                 }
@@ -110,8 +108,10 @@ public class ViewDialog extends Dialog implements
     @Override
     public void onClick(View v) {
         ImageButton addToFavesFromMapsActivity = this.activity.findViewById(R.id.imageButton);
-        addToFavesFromMapsActivity.setEnabled(false);
-        addToFavesFromMapsActivity.setImageResource(R.drawable.faves);
+        if(addToFavesFromMapsActivity != null){
+            addToFavesFromMapsActivity.setEnabled(false);
+            addToFavesFromMapsActivity.setImageResource(R.drawable.faves);
+        }
         final String roadname = roadGivenName.getText().toString();
         if(!roadname.equals("")){
             if(caller_id == 0){
@@ -140,9 +140,7 @@ public class ViewDialog extends Dialog implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.hasChild(input)){
-                }
-                else{
+                if(!dataSnapshot.hasChild(input)){
                     currentUserRef.child(input).child("road_name").setValue(input);
                     currentUserRef.child(input).child("road").setValue(decodedPolyline);
                     currentUserRef.child(input).child("instruct_start_points").setValue(MapsActivity.route_instruc_strt_pnts);

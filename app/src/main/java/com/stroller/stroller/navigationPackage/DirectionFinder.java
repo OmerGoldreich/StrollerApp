@@ -25,14 +25,12 @@ public class DirectionFinder {
     private String origin;
     private List<Highlight> highlights=new ArrayList<>();
     private String destination;
-    private String whatPageBroughtMeHere;
     public static List<LatLon> decodedPolyline;
     public static List<LatLon> startInstructPoints;
-    public DirectionFinder(DirectionFinderListener listener, String origin, String destination,String faves_or_search) {
+    public DirectionFinder(DirectionFinderListener listener, String origin, String destination) {
         this.listener = listener;
         this.origin = origin;
         this.destination = destination;
-        this.whatPageBroughtMeHere = faves_or_search;
     }
     public void execute() throws JSONException,IOException {
         listener.onDirectionFinderStart();

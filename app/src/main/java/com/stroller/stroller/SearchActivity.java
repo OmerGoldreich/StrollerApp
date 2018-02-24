@@ -54,8 +54,6 @@ public class SearchActivity extends AppCompatActivity {
             username.setText(String.format("Hello, %s", firstName));
             ImageView imgProfilePic = findViewById(R.id.user);
             String ProfilePicURL = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
-       //     String ProfilePicURL="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAyqAAAAJGFlNWJiODA3LWZkNzctNGNhOC1iYTZkLTc5NzFlNjFmMmU0Ng.jpg";
-            // show The Image
             new DownloadImageTask(imgProfilePic)
                     .execute(ProfilePicURL);
             String loading = extras.getString("loading");
@@ -63,7 +61,6 @@ public class SearchActivity extends AppCompatActivity {
                 CustomDialog dialog = new CustomDialog(SearchActivity.this, 4);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
-                return;
             }
         }
     }
