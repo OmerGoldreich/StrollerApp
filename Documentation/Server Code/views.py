@@ -386,7 +386,19 @@ def calcRoute(fromLon,fromLat,toLon,toLat):
                 toNodeDict["minDistance"]=currentDistance
                 toNodeDict["node"]=v
         #logging.info(networkx.shortest_path_length(G,source=fromNodeDict["node"],target=toNodeDict["node"],weight='length'))
-        dijkstraSelectedNodeList=networkx.dijkstra_path(G,fromNodeDict["node"],toNodeDict["node"])
+        try:
+            dijkstraSelectedNodeList=networkx.dijkstra_path(G,fromNodeDict["node"],toNodeDict["node"])
+        except:
+            seenDict={}
+            lastEdge=sys.maxsize
+            for edge in networkx.dfs_edges(G,fromNodeDict["node"]):
+                if edge[0] not in seenDict:
+                    seenDict[edge[0]]=1
+                    lastEdge=edge[1]
+                else:
+                    G.add_edge(lastEdge,toNodeDict["node"],weight=100)
+            G.add_edge(lastEdge,toNodeDict["node"],weight=100)
+            dijkstraSelectedNodeList=networkx.dijkstra_path(G,fromNodeDict["node"],toNodeDict["node"])
 
         googleDirectionURL["url"]=googleDirectionURL["url"].format(str(fromLat)+","+str(fromLon),(str(toLat)+","+str(toLon)),"{2}")
         #fix highlights
@@ -400,6 +412,8 @@ def calcRoute(fromLon,fromLat,toLon,toLat):
                 if str(dijkstraSelectedNodeList[i])+"-"+str(dijkstraSelectedNodeList[i+1]) in categoriesSummary:
                     currentDict=categoriesSummary[str(dijkstraSelectedNodeList[i])+"-"+str(dijkstraSelectedNodeList[i+1])]
                 else:
+                    if str(dijkstraSelectedNodeList[i+1])+"-"+str(dijkstraSelectedNodeList[i]) not in categoriesSummary:
+                        continue
                     currentDict=categoriesSummary[str(dijkstraSelectedNodeList[i+1])+"-"+str(dijkstraSelectedNodeList[i])]
                     reverseFlag=True
                 for key, value in currentDict.items():
