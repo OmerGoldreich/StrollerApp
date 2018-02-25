@@ -25,7 +25,7 @@ Discover new restaurants, cafes, pubs, and many more attractions you would have 
 
 The application is available in Google Play
 
-To install Stroller, download STROLLER.apk to your android device from this link: https://github.com/OmerGoldreich/StrollerApp/raw/master/STROLLER.apk  <br />
+To install Stroller, download STROLLER.apk to your android device from this link: https://github.com/OmerGoldreich/StrollerApp/blob/master/Stroller.apk <br />
 We advise using the app 'FastHub' for browsing GitHub easily. <br />
 After downloading, click on the APK file in your android device, and Stroller will be installed :)<br />
 
